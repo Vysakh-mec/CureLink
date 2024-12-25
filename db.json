@@ -378,30 +378,15 @@
           "concerns": [
             {
               "id": "1",
-              "name": "HyperTension",
-              "specializations": [
-                "Cardiologist",
-                "Internal Medicine",
-                "Hypertension Specialist"
-              ]
+              "name": "HyperTension"
             },
             {
               "id": "2",
-              "name": "Anxiety",
-              "specializations": [
-                "Psychiatrist",
-                "Psychologist",
-                "Mental Health Specialist"
-              ]
+              "name": "Anxiety"
             },
             {
               "id": "3",
-              "name": "Obesity",
-              "specializations": [
-                "Dietitian",
-                "Endocrinologist",
-                "Bariatric Surgeon"
-              ]
+              "name": "Obesity"
             }
           ]
         },
@@ -410,48 +395,23 @@
           "concerns": [
             {
               "id": "4",
-              "name": "HyperTension",
-              "specializations": [
-                "Cardiologist",
-                "Internal Medicine",
-                "Hypertension Specialist"
-              ]
+              "name": "HyperTension"
             },
             {
               "id": "5",
-              "name": "Diabetes",
-              "specializations": [
-                "Endocrinologist",
-                "Diabetologist",
-                "Internal Medicine"
-              ]
+              "name": "Diabetes"
             },
             {
               "id": "6",
-              "name": "Obesity",
-              "specializations": [
-                "Dietitian",
-                "Endocrinologist",
-                "Bariatric Surgeon"
-              ]
+              "name": "Obesity"
             },
             {
               "id": "7",
-              "name": "Anxiety",
-              "specializations": [
-                "Psychiatrist",
-                "Psychologist",
-                "Mental Health Specialist"
-              ]
+              "name": "Anxiety"
             },
             {
               "id": "8",
-              "name": "PCOS",
-              "specializations": [
-                "Gynecologist",
-                "Endocrinologist",
-                "Fertility Specialist"
-              ]
+              "name": "PCOS"
             }
           ]
         },
@@ -460,57 +420,27 @@
           "concerns": [
             {
               "id": "9",
-              "name": "Diabetes",
-              "specializations": [
-                "Endocrinologist",
-                "Diabetologist",
-                "Internal Medicine"
-              ]
+              "name": "Diabetes"
             },
             {
               "id": "10",
-              "name": "Acne",
-              "specializations": [
-                "Dermatologist",
-                "Cosmetic Dermatologist",
-                "Aesthetician"
-              ]
+              "name": "Acne"
             },
             {
               "id": "11",
-              "name": "Eczema",
-              "specializations": [
-                "Dermatologist",
-                "Allergist",
-                "Immunologist"
-              ]
+              "name": "Eczema"
             },
             {
               "id": "12",
-              "name": "Rubella",
-              "specializations": [
-                "Pediatrician",
-                "Immunologist",
-                "Infectious Disease Specialist"
-              ]
+              "name": "Rubella"
             },
             {
               "id": "13",
-              "name": "Hypothermia",
-              "specializations": [
-                "Emergency Medicine",
-                "Internal Medicine",
-                "Pediatrician"
-              ]
+              "name": "Hypothermia"
             },
             {
               "id": "14",
-              "name": "Frostbite",
-              "specializations": [
-                "Emergency Medicine",
-                "Internal Medicine",
-                "Pediatrician"
-              ]
+              "name": "Frostbite"
             }
           ]
         }
