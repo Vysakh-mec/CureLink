@@ -1,6 +1,8 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import StarIcon from "../../assets/icons/StarIcon.svg"
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigation/type'
 
 type DoctorListItemProps = {
     id:number
@@ -9,9 +11,15 @@ type DoctorListItemProps = {
 
 const DoctorListItem = ({id}:DoctorListItemProps) => {
     
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+
+    const handleNavigation = () => {
+        navigation.navigate("doctorDetail")
+    }
+    
     
   return (
-    <View style={styles.container}>     
+    <TouchableOpacity activeOpacity={0.9} onPress={() => handleNavigation()} style={styles.container}>     
       <View style={styles.upperContainer}>
         <Image source={{
             uri:"https://picsum.photos/200/300?random=1"
@@ -37,7 +45,7 @@ const DoctorListItem = ({id}:DoctorListItemProps) => {
                 <Text style={[styles.subText,{color:"black"}]}>Free</Text>
             </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

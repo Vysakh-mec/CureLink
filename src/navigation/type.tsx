@@ -1,5 +1,6 @@
 export type RootStackParamList  = {
     home:undefined,
     selectConcern:undefined,
-    consult:undefined
+    consult:undefined,
+    doctorDetail:undefined,
 }

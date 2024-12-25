@@ -14,7 +14,7 @@ const ConsultScreen = () => {
         fetch(`${app_url}/doctors`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
+                setDoctorData(data)
             })
             .catch(error => {
                 console.log(error.message)
