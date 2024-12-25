@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -13,6 +13,8 @@ import Hypothermia from "../../assets/icons/Hypothermia.svg"
 import Obesity from "../../assets/icons/Obesity.svg"
 import PCOS from "../../assets/icons/PCOS.svg"
 import Rubella from "../../assets/icons/Rubella.svg"
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigation/type'
 
 
 type ConcernListProp =  {
@@ -41,13 +43,16 @@ const iconMap : {[key:string]:React.FC} =  {
 const SelectConcernScreen = () => {
 
     const [concerns , setConcerns] = useState<ConcernListProp[]>([])
-
+    const [loading , setLoading] = useState(false)
     const api_url = process.env.EXPO_PUBLIC_API_URL
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
     
     useEffect(() => {
+        setLoading(true)
         fetch(`${api_url}/concerns`)
         .then((response) => response.json())
         .then((data) => {
+            setLoading(false)
             setConcerns(data)
         }).catch(error => {
             console.log(error.message)
@@ -58,7 +63,7 @@ const SelectConcernScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-            <CustomHeader />
+            <CustomHeader header={"Select Concern"} />
 
             <View style={styles.subContainer}>
                 <Text style={styles.labelText}>Please select your concern</Text>
@@ -66,13 +71,16 @@ const SelectConcernScreen = () => {
                     <SearchIcon />
                     <TextInput placeholderTextColor={"#ACBAAC"} placeholder='Search for concern here' style={styles.input} />
                 </View>
-
                 {
-                    concerns.map((item,index) => <ConcernList category={item.category} concerns={item.concerns} key={index} />)
-                }
+                    loading ? 
+                    <ActivityIndicator size={50} color={"#3A643B"}  />
+                :
                 
+                    concerns.map((item,index) => <ConcernList category={item.category} concerns={item.concerns} key={index} />)
+                
+            }
             </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={() => navigation.navigate("consult")} style={styles.button}>
                     <Text style={styles.buttonText}>Confirm Concern</Text>
                 </TouchableOpacity>
             </ScrollView>

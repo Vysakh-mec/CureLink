@@ -3,7 +3,11 @@ import React from 'react'
 import BackButton from "../../assets/icons/BackButton.svg"
 import { useNavigation } from '@react-navigation/native'
 
-const CustomHeader = () => {
+// type CustomHeaderProp = {
+//     header:string
+// }
+
+const CustomHeader = ({header}:any) => {
 
     const naviagtion = useNavigation()
 
@@ -12,7 +16,7 @@ const CustomHeader = () => {
             <TouchableOpacity onPress={() => naviagtion.goBack()}>
                 <BackButton height={24} width={24} />
             </TouchableOpacity>
-            <Text style={styles.text}>Select Concern</Text>
+            <Text style={styles.text}>{header}</Text>
             <View style={[styles.ellipse,{right: -40,bottom:-120 }]}>
             </View>
             <View style={[styles.ellipse,{right:0,top:-100}]}></View>

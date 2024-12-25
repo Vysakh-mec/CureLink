@@ -7,6 +7,7 @@ import { RootStackParamList } from './src/navigation/type';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
+import ConsultScreen from './src/screens/ConsultScreen';
 
 
 SplashScreen.preventAutoHideAsync()
@@ -39,8 +40,9 @@ export default function App() {
       <Stack.Navigator initialRouteName='home'screenOptions={{
         headerShown:false
       }}>
-        <Stack.Screen name='home' component={HomeScreen} /> 
+        <Stack.Screen name="home" component={HomeScreen} /> 
         <Stack.Screen name="selectConcern" component={SelectConcernScreen} />
+        <Stack.Screen name="consult" component={ConsultScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
