@@ -1,0 +1,518 @@
+{
+    "doctors": [
+        {
+            "id": 1,
+            "name": "Dr. Sarah Lee",
+            "specialist": "Dermatologist",
+            "followers": 150,
+            "experience": "15 years",
+            "rating": 4.5,
+            "bio": "Experienced dermatologist with expertise in treating skin conditions.",
+            "specializes_in": [
+                "HyperTension",
+                "Obesity",
+                "Diabetes"
+            ],
+            "video_consultation_fee": 50,
+            "reviews": [
+                {
+                    "star": 5,
+                    "content": "Great doctor with excellent care and expertise.",
+                    "postedName": "Alex Smith",
+                    "date": "20 January 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "City Health Clinic",
+                    "location": "Downtown",
+                    "role": "Physician"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "Stanford University",
+                    "degree": "MD in Dermatology",
+                    "year": 2014
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Dr. John Smith",
+            "specialist": "Endocrinologist",
+            "followers": 200,
+            "experience": "12 years",
+            "rating": 4.7,
+            "bio": "Specializes in managing hormonal imbalances and lifestyle disorders.",
+            "specializes_in": [
+                "Diabetes",
+                "Anxiety",
+                "PCOS"
+            ],
+            "video_consultation_fee": 60,
+            "reviews": [
+                {
+                    "star": 5,
+                    "content": "Great doctor with excellent care and expertise.",
+                    "postedName": "Alex Smith",
+                    "date": "20 January 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "EndoCare Center",
+                    "location": "Uptown",
+                    "role": "Endocrinologist"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "Harvard Medical School",
+                    "degree": "MD in Endocrinology",
+                    "year": 2012
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Dr. Emily Davis",
+            "specialist": "Ayurvedic Specialist",
+            "followers": 250,
+            "experience": "11 years",
+            "rating": 4.8,
+            "bio": "Renowned Ayurvedic doctor focusing on holistic healing.",
+            "specializes_in": [
+                "Acne",
+                "Eczema",
+                "HyperTension"
+            ],
+            "video_consultation_fee": 55,
+            "reviews": [
+                {
+                    "star": 4,
+                    "content": "Great doctor with excellent care and expertise.",
+                    "postedName": "Jane Roe",
+                    "date": "20 January 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Ayurveda Healing Hub",
+                    "location": "Suburban",
+                    "role": "Ayurvedic Specialist"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "Kerala Ayurveda Academy",
+                    "degree": "BAMS",
+                    "year": 2015
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Dr. Robert Brown",
+            "specialist": "General Physician",
+            "followers": 180,
+            "experience": "10 years",
+            "rating": 4.6,
+            "bio": "General physician with years of experience in preventive care.",
+            "specializes_in": [
+                "Obesity",
+                "Frostbite",
+                "Hypothermia"
+            ],
+            "video_consultation_fee": 65,
+            "reviews": [
+                {
+                    "star": 5,
+                    "content": "Great doctor with excellent care and expertise.",
+                    "postedName": "Alex Smith",
+                    "date": "20 January 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Wellness Hospital",
+                    "location": "Central",
+                    "role": "General Physician"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "Oxford Medical College",
+                    "degree": "MBBS",
+                    "year": 2010
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Dr. Olivia Wilson",
+            "specialist": "Pediatrician",
+            "followers": 300,
+            "experience": "7 years",
+            "rating": 4.9,
+            "bio": "Pediatrician with a passion for children's health and wellbeing.",
+            "specializes_in": [
+                "Rubella",
+                "Acne",
+                "Diabetes",
+                "Eczema"
+            ],
+            "video_consultation_fee": 70,
+            "reviews": [
+                {
+                    "star": 4,
+                    "content": "Great doctor with excellent care and expertise.",
+                    "postedName": "John Doe",
+                    "date": "20 January 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Kids Care Clinic",
+                    "location": "East Side",
+                    "role": "Pediatrician"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "Cambridge University",
+                    "degree": "MD in Pediatrics",
+                    "year": 2018
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Dr. Aditi Sharma",
+            "specialist": "Cardiologist",
+            "followers": 220,
+            "experience": "18 years",
+            "rating": 4.7,
+            "bio": "Dedicated cardiologist focused on treating heart-related conditions.",
+            "specializes_in": [
+                "HyperTension",
+                "Anxiety",
+                "Obesity"
+            ],
+            "video_consultation_fee": 80,
+            "reviews": [
+                {
+                    "star": 5,
+                    "content": "Highly professional and empathetic.",
+                    "postedName": "Suresh Kumar",
+                    "date": "15 February 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Heart Care Clinic",
+                    "location": "South Avenue",
+                    "role": "Senior Cardiologist"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "AIIMS, Delhi",
+                    "degree": "DM in Cardiology",
+                    "year": 2005
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Dr. Vikram Reddy",
+            "specialist": "Endocrinologist",
+            "followers": 180,
+            "experience": "14 years",
+            "rating": 4.5,
+            "bio": "Endocrinologist skilled in managing diabetes and hormonal disorders.",
+            "specializes_in": [
+                "Diabetes",
+                "PCOS",
+                "Anxiety"
+            ],
+            "video_consultation_fee": 70,
+            "reviews": [
+                {
+                    "star": 4,
+                    "content": "Excellent knowledge and care.",
+                    "postedName": "Meera Joshi",
+                    "date": "10 March 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Hormone Health Center",
+                    "location": "City Center",
+                    "role": "Consultant Endocrinologist"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "Christian Medical College, Vellore",
+                    "degree": "MD in Endocrinology",
+                    "year": 2010
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Dr. Priya Menon",
+            "specialist": "Dermatologist",
+            "followers": 320,
+            "experience": "12 years",
+            "rating": 4.8,
+            "bio": "Dermatologist with a focus on treating complex skin issues.",
+            "specializes_in": [
+                "Acne",
+                "Eczema",
+                "Rubella"
+            ],
+            "video_consultation_fee": 90,
+            "reviews": [
+                {
+                    "star": 5,
+                    "content": "Solved my skin issues effectively.",
+                    "postedName": "Ananya Roy",
+                    "date": "5 April 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Skin Solutions Clinic",
+                    "location": "North Park",
+                    "role": "Lead Dermatologist"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "JIPMER, Puducherry",
+                    "degree": "MD in Dermatology",
+                    "year": 2012
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Dr. Ravi Gupta",
+            "specialist": "Ayurvedic Consultant",
+            "followers": 400,
+            "experience": "10 years",
+            "rating": 4.9,
+            "bio": "Ayurvedic consultant promoting holistic wellness.",
+            "specializes_in": [
+                "Eczema",
+                "Obesity",
+                "HyperTension"
+            ],
+            "video_consultation_fee": 75,
+            "reviews": [
+                {
+                    "star": 5,
+                    "content": "Great approach to alternative medicine.",
+                    "postedName": "Rohan Verma",
+                    "date": "12 May 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Ayurveda Wellness Center",
+                    "location": "Greenfield",
+                    "role": "Chief Consultant"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "BHU, Varanasi",
+                    "degree": "BAMS",
+                    "year": 2013
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "name": "Dr. Neha Kapoor",
+            "specialist": "General Physician",
+            "followers": 270,
+            "experience": "9 years",
+            "rating": 4.6,
+            "bio": "General physician providing comprehensive primary care.",
+            "specializes_in": [
+                "Hypothermia",
+                "Frostbite",
+                "Diabetes"
+            ],
+            "video_consultation_fee": 65,
+            "reviews": [
+                {
+                    "star": 4,
+                    "content": "Very kind and thorough.",
+                    "postedName": "Arjun Singh",
+                    "date": "25 June 2023"
+                }
+            ],
+            "work_experience": [
+                {
+                    "clinic": "Primary Health Clinic",
+                    "location": "West End",
+                    "role": "General Practitioner"
+                }
+            ],
+            "academics": [
+                {
+                    "institution": "King George's Medical University, Lucknow",
+                    "degree": "MBBS",
+                    "year": 2014
+                }
+            ]
+        }
+    ],
+    "concerns":[
+        {
+          "category": "Seasonal based Concern",
+          "concerns": [
+            {
+              "id": "1",
+              "name": "HyperTension",
+              "specializations": [
+                "Cardiologist",
+                "Internal Medicine",
+                "Hypertension Specialist"
+              ]
+            },
+            {
+              "id": "2",
+              "name": "Anxiety",
+              "specializations": [
+                "Psychiatrist",
+                "Psychologist",
+                "Mental Health Specialist"
+              ]
+            },
+            {
+              "id": "3",
+              "name": "Obesity",
+              "specializations": [
+                "Dietitian",
+                "Endocrinologist",
+                "Bariatric Surgeon"
+              ]
+            }
+          ]
+        },
+        {
+          "category": "Concern for Lifestyle related conditions",
+          "concerns": [
+            {
+              "id": "4",
+              "name": "HyperTension",
+              "specializations": [
+                "Cardiologist",
+                "Internal Medicine",
+                "Hypertension Specialist"
+              ]
+            },
+            {
+              "id": "5",
+              "name": "Diabetes",
+              "specializations": [
+                "Endocrinologist",
+                "Diabetologist",
+                "Internal Medicine"
+              ]
+            },
+            {
+              "id": "6",
+              "name": "Obesity",
+              "specializations": [
+                "Dietitian",
+                "Endocrinologist",
+                "Bariatric Surgeon"
+              ]
+            },
+            {
+              "id": "7",
+              "name": "Anxiety",
+              "specializations": [
+                "Psychiatrist",
+                "Psychologist",
+                "Mental Health Specialist"
+              ]
+            },
+            {
+              "id": "8",
+              "name": "PCOS",
+              "specializations": [
+                "Gynecologist",
+                "Endocrinologist",
+                "Fertility Specialist"
+              ]
+            }
+          ]
+        },
+        {
+          "category": "Top Concerns",
+          "concerns": [
+            {
+              "id": "9",
+              "name": "Diabetes",
+              "specializations": [
+                "Endocrinologist",
+                "Diabetologist",
+                "Internal Medicine"
+              ]
+            },
+            {
+              "id": "10",
+              "name": "Acne",
+              "specializations": [
+                "Dermatologist",
+                "Cosmetic Dermatologist",
+                "Aesthetician"
+              ]
+            },
+            {
+              "id": "11",
+              "name": "Eczema",
+              "specializations": [
+                "Dermatologist",
+                "Allergist",
+                "Immunologist"
+              ]
+            },
+            {
+              "id": "12",
+              "name": "Rubella",
+              "specializations": [
+                "Pediatrician",
+                "Immunologist",
+                "Infectious Disease Specialist"
+              ]
+            },
+            {
+              "id": "13",
+              "name": "Hypothermia",
+              "specializations": [
+                "Emergency Medicine",
+                "Internal Medicine",
+                "Pediatrician"
+              ]
+            },
+            {
+              "id": "14",
+              "name": "Frostbite",
+              "specializations": [
+                "Emergency Medicine",
+                "Internal Medicine",
+                "Pediatrician"
+              ]
+            }
+          ]
+        }
+      ]
+}
