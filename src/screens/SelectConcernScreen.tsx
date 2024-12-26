@@ -54,8 +54,9 @@ const SelectConcernScreen = () => {
         .then((data) => {
             setLoading(false)
             setConcerns(data)
-        }).catch(error => {
-            console.log(error.message)
+        }).catch((error) => {
+            setLoading(false)
+            console.log(error)
         })
     },[])
 

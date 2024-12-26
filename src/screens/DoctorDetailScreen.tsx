@@ -4,8 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import CustomHeader from "../components/CustomHeader"
 import BulletIcon from "../../assets/icons/BulletIcon.svg"
 import ReviewItem from "../components/ReviewItem"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { RootStackParamList } from "../navigation/type"
 
 const DoctorDetailScreen = () => {
+
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+    
+    
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
@@ -100,7 +106,7 @@ const DoctorDetailScreen = () => {
                     </View>
                 </View>
                 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate("chooseConsultation")} style={styles.button}>
                     <Text style={styles.buttonText}>Book Consultation</Text>
                 </TouchableOpacity>
             </ScrollView>
