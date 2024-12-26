@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import ConsultScreen from './src/screens/ConsultScreen';
 import DoctorDetailScreen from './src/screens/DoctorDetailScreen';
 import ChooseConsultationScreen from './src/screens/ChooseConsultationScreen';
+import ChooseDateScreen from './src/screens/ChooseDateScreen';
+import ChooseTimeScreen from './src/screens/ChooseTimeScreen';
 
 
 SplashScreen.preventAutoHideAsync()
@@ -37,16 +39,21 @@ export default function App() {
   }
   
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <StatusBar style='dark' />
       <Stack.Navigator initialRouteName='home'screenOptions={{
-        headerShown:false
+        headerShown:false,
+        cardStyle:{
+          backgroundColor:"white"
+        }
       }}>
         <Stack.Screen name="home" component={HomeScreen} /> 
         <Stack.Screen name="selectConcern" component={SelectConcernScreen} />
         <Stack.Screen name="consult" component={ConsultScreen} />
         <Stack.Screen name='doctorDetail' component={DoctorDetailScreen} />
         <Stack.Screen name='chooseConsultation' component={ChooseConsultationScreen} />
+        <Stack.Screen name='chooseDate' component={ChooseDateScreen} />
+        <Stack.Screen name='chooseTime' component={ChooseTimeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

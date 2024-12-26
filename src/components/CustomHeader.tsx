@@ -3,7 +3,11 @@ import React from 'react'
 import BackButton from "../../assets/icons/BackButton.svg"
 import { useNavigation } from '@react-navigation/native'
 
-const CustomHeader = ({header}:any) => {
+type CustomHeaderProp = {
+    header?:string
+}
+
+const CustomHeader = ({header}:CustomHeaderProp) => {
 
     const naviagtion = useNavigation()
 
