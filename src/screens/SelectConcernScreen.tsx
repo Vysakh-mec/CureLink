@@ -15,6 +15,7 @@ import PCOS from "../../assets/icons/PCOS.svg"
 import Rubella from "../../assets/icons/Rubella.svg"
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import CustomButton from '../components/CustomButton'
 
 
 type ConcernListProp =  {
@@ -81,9 +82,9 @@ const SelectConcernScreen = () => {
                 
             }
             </View>
-                <TouchableOpacity onPress={() => navigation.navigate("consult")} style={styles.button}>
-                    <Text style={styles.buttonText}>Confirm Concern</Text>
-                </TouchableOpacity>
+                
+            <CustomButton text="Confirm Concern" onPress={() => navigation.navigate("consult")} />
+                
             </ScrollView>
         </SafeAreaView>
     )
@@ -181,19 +182,4 @@ const styles = StyleSheet.create({
         color:"#3A643C",
         marginRight:10
     },
-    button:{
-        backgroundColor:"#3A643B",
-        paddingVertical:16,
-        paddingHorizontal:16,
-        borderRadius:12,
-        alignSelf:"center",
-        width:"90%",
-        marginBottom:25
-    },
-    buttonText:{
-        color:"white",
-        fontFamily:"Nunito600",
-        fontSize:16,
-        textAlign:"center"
-    }
 })

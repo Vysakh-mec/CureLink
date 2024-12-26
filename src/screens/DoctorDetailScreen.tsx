@@ -6,6 +6,7 @@ import BulletIcon from "../../assets/icons/BulletIcon.svg"
 import ReviewItem from "../components/ReviewItem"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
 import { RootStackParamList } from "../navigation/type"
+import CustomButton from "../components/CustomButton"
 
 const DoctorDetailScreen = () => {
 
@@ -105,10 +106,8 @@ const DoctorDetailScreen = () => {
                     <Text style={styles.secondaryText}>Harvard Medical School {"\n"}MD in Endocrinology{"\n"}2012</Text>
                     </View>
                 </View>
-                
-                <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate("chooseConsultation")} style={styles.button}>
-                    <Text style={styles.buttonText}>Book Consultation</Text>
-                </TouchableOpacity>
+
+                <CustomButton text="Book Consultation" onPress={() => navigation.navigate("chooseConsultation")} />
             </ScrollView>
         </SafeAreaView>
     )
@@ -199,20 +198,9 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 16
     },
-    bulletContainer:{ flexDirection: "row", columnGap: 10, alignItems: "center" },
-    button:{
-        backgroundColor:"#3A643B",
-        paddingVertical:16,
-        paddingHorizontal:16,
-        borderRadius:12,
-        alignSelf:"center",
-        width:"90%",
-        marginBottom:25
+    bulletContainer:{ 
+        flexDirection: "row", 
+        columnGap: 10, 
+        alignItems: "center" 
     },
-    buttonText:{
-        color:"white",
-        fontFamily:"Nunito600",
-        fontSize:16,
-        textAlign:"center"
-    }
 })
