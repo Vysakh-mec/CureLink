@@ -3,7 +3,7 @@ import React from 'react'
 
 type CustomItemProps = {
     mainText:string,
-    subText:string
+    subText?:string
 }
 
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         padding:20,
         backgroundColor:"#FAFAFA",
         borderRadius:16,
-        width:"30%",
+        width:"32%",
         justifyContent:"center"
     },
     primaryText:{

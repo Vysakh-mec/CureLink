@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -64,7 +64,6 @@ const SelectConcernScreen = () => {
     
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
             <CustomHeader header={"Select Concern"} />
 
             <View style={styles.subContainer}>
@@ -73,19 +72,20 @@ const SelectConcernScreen = () => {
                     <SearchIcon />
                     <TextInput placeholderTextColor={"#ACBAAC"} placeholder='Search for concern here' style={styles.input} />
                 </View>
+            </View>
                 {
                     loading ? 
                     <ActivityIndicator size={50} color={"#3A643B"}  />
                 :
                 
                     concerns.map((item,index) => <ConcernList category={item.category} concerns={item.concerns} key={index} />)
-                
+                    // REPLACE WITH FLATLIST
+                    
+                    // <FlatList numColumns={3} columnWrapperStyle={columnWrapper} data={concerns} renderItem={({item}) => <ConcernList category={item.category} concerns={item.concerns} />} keyExtractor={(item,index) => index.toString()}  />
             }
-            </View>
                 
             <CustomButton text="Confirm Concern" onPress={() => navigation.navigate("consult")} />
                 
-            </ScrollView>
         </SafeAreaView>
     )
 }
