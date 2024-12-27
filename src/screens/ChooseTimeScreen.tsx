@@ -42,7 +42,7 @@ const ChooseTimeScreen = () => {
                 <FlatList showsVerticalScrollIndicator={false} data={timeSlots} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => <CustomList title={item.section} data={item.time} />} />
             </View>
             <SelectedInfo />
-            <CustomButton text='Confirm Appointment' onPress={() => navigation.navigate("appoinmentConfirmed")} />
+            <CustomButton text='Confirm Appointment' onPress={() => navigation.navigate("appoinmentReview")} />
         </SafeAreaView>
     )
 }

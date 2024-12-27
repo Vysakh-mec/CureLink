@@ -4,7 +4,7 @@ import React from 'react'
 const AppoinmentConfirmed = () => {
   return (
     <View>
-      <Text>AppoinmentConfirmed</Text>
+      <Text>appoinmentConfirmed</Text>
     </View>
   )
 }

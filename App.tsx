@@ -12,6 +12,7 @@ import DoctorDetailScreen from './src/screens/DoctorDetailScreen';
 import ChooseConsultationScreen from './src/screens/ChooseConsultationScreen';
 import ChooseDateScreen from './src/screens/ChooseDateScreen';
 import ChooseTimeScreen from './src/screens/ChooseTimeScreen';
+import AppoinmentReview from './src/screens/AppoinmentReview';
 import AppoinmentConfirmed from './src/screens/AppoinmentConfirmed';
 
 
@@ -55,7 +56,8 @@ export default function App() {
         <Stack.Screen name='chooseConsultation' component={ChooseConsultationScreen} />
         <Stack.Screen name='chooseDate' component={ChooseDateScreen} />
         <Stack.Screen name='chooseTime' component={ChooseTimeScreen} />
-        <Stack.Screen name='appoinmentConfirmed' component={AppoinmentConfirmed} />
+        <Stack.Screen name='appoinmentReview' component={AppoinmentReview} />
+        <Stack.Screen name='appoinmentConfirmed' component={AppoinmentConfirmed}  />
       </Stack.Navigator>
     </NavigationContainer>
   );
