@@ -3,8 +3,13 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import GreenTickIconLarge from "../../assets/icons/GreenTickLargeIcon.svg"
 import CustomButton from '../components/CustomButton'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigation/type'
 
 const AppoinmentConfirmed = () => {
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -18,7 +23,7 @@ const AppoinmentConfirmed = () => {
         <Text style={styles.linkText}>86% of users who submitted their reports and shared detailed information with the doctor have successfully improved their health.</Text>
       </View>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <CustomButton text='Skip' onPress={() => { }} containerStyle={{ backgroundColor: "white", borderWidth: 1, borderColor: "#3A643C" }} labelStyle={{ color: "#3A643C" }} />
+        <CustomButton text='Skip' onPress={() => navigation.navigate("skipScreen")} containerStyle={{ backgroundColor: "white", borderWidth: 1, borderColor: "#3A643C" }} labelStyle={{ color: "#3A643C" }} />
         <CustomButton text='Upload Health Records' onPress={() => { }} />
       </View>
     </SafeAreaView>

@@ -7,5 +7,7 @@ export type RootStackParamList  = {
     chooseDate:undefined,
     chooseTime:undefined,
     appoinmentReview:undefined,
-    appoinmentConfirmed:undefined
+    appoinmentConfirmed:undefined,
+    skipScreen:undefined,
+    myBooking:undefined
 }

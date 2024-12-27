@@ -1,11 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 import React from 'react'
 
 type CustomButtonProps = {
     text?:string,
     onPress:Function,
-    containerStyle?:object,
-    labelStyle?:object
+    containerStyle?:StyleProp<ViewStyle>,
+    labelStyle?:StyleProp<TextStyle>
 }
 
 const CustomButton = ({ text , onPress , containerStyle , labelStyle }:CustomButtonProps) => {
