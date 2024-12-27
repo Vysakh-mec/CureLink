@@ -82,12 +82,7 @@ const ConcernList = ({category,concerns} : ConcernListProp ) => {
                         : null
                 }
             </View>
-            {/* <View style={styles.iconGrid}>
-
-                {
-                    concerns.map((item, index) => <CustomIcon id={item.id} name={item.name} key={index} />)
-                }
-            </View> */}
+            
             <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={concerns} renderItem={({item}) => <CustomIcon name={item.name} id={item.id} />} />
             
         </View>
