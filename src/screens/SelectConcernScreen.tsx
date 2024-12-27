@@ -3,20 +3,11 @@ import React, { useEffect, useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SearchIcon from "../../assets/icons/SearchIcon.svg"
-import Acne from "../../assets/icons/Acne.svg"
-import Anxiety from "../../assets/icons/Anxiety.svg"
-import Diabetes from "../../assets/icons/Diabetes.svg"
-import Eczema from "../../assets/icons/Eczema.svg"
-import Frostbite from "../../assets/icons/Frostbite.svg"
 import Hypertension from "../../assets/icons/HyperTension.svg"
-import Hypothermia from "../../assets/icons/Hypothermia.svg"
-import Obesity from "../../assets/icons/Obesity.svg"
-import PCOS from "../../assets/icons/PCOS.svg"
-import Rubella from "../../assets/icons/Rubella.svg"
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import CustomButton from '../components/CustomButton'
-
+import { iconMap } from '../constant/IconsMap'
 
 type ConcernListProp =  {
     category:string,
@@ -28,18 +19,6 @@ type ConcernDetail = {
     name:string,
 }
 
-const iconMap : {[key:string]:React.FC} =  {
-    Acne: Acne,
-    Anxiety: Anxiety,
-    Diabetes: Diabetes,
-    Eczema: Eczema,
-    Frostbite: Frostbite,
-    Hypertension: Hypertension,
-    Hypothermia: Hypothermia,
-    Obesity: Obesity,
-    PCOS: PCOS,
-    Rubella: Rubella,
-}
 
 const SelectConcernScreen = () => {
 
@@ -78,10 +57,8 @@ const SelectConcernScreen = () => {
                     <ActivityIndicator size={50} color={"#3A643B"}  />
                 :
                 
-                    concerns.map((item,index) => <ConcernList category={item.category} concerns={item.concerns} key={index} />)
-                    // REPLACE WITH FLATLIST
-                    
-                    // <FlatList numColumns={3} columnWrapperStyle={columnWrapper} data={concerns} renderItem={({item}) => <ConcernList category={item.category} concerns={item.concerns} />} keyExtractor={(item,index) => index.toString()}  />
+
+                    <FlatList data={concerns} renderItem={({item}) => <ConcernList category={item.category} concerns={item.concerns} />} keyExtractor={(item,index) => index.toString()}  />
             }
                 
             <CustomButton text="Confirm Concern" onPress={() => navigation.navigate("consult")} />
@@ -94,23 +71,25 @@ const SelectConcernScreen = () => {
 
 
 const ConcernList = ({category,concerns} : ConcernListProp ) => {
-    
-    return(
-        <View >
-            <View style={styles.categoryContainer}>
-            <Text style={styles.categoryText}>{category}</Text>
-            {
-                category == "Top Concerns" ? 
-                <Text style={styles.linkText}>View all</Text>
-                : null
-            }
-            </View>
-            <View style={styles.iconGrid}> 
 
-            {
-                concerns.map((item,index) => <CustomIcon id={item.id} name={item.name}   key={index}/>)
-            }
+    return (
+        <View style={{marginBottom:20}}>
+            <View style={styles.categoryContainer}>
+                <Text style={styles.categoryText}>{category}</Text>
+                {
+                    category == "Top Concerns" ?
+                        <Text style={styles.linkText}>View all</Text>
+                        : null
+                }
             </View>
+            {/* <View style={styles.iconGrid}>
+
+                {
+                    concerns.map((item, index) => <CustomIcon id={item.id} name={item.name} key={index} />)
+                }
+            </View> */}
+            <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={concerns} renderItem={({item}) => <CustomIcon name={item.name} id={item.id} />} />
+            
         </View>
     )
 }
@@ -123,7 +102,7 @@ const CustomIcon = ({id , name} : ConcernDetail) => {
     return(
         <View style={styles.iconContainer}>
             {IconComponent ? <IconComponent  /> : <Hypertension />}
-            <Text style={{textAlign:"center"}}>{name}</Text>
+            <Text style={styles.iconText}>{name}</Text>
         </View>
     )
 }
@@ -166,9 +145,9 @@ const styles = StyleSheet.create({
         rowGap:20,
     },
     iconContainer:{
-        width:"30%",
         alignItems:"center",
         rowGap:10,
+        width:"33%",
     },
     categoryText:{
         fontSize:14,
@@ -176,10 +155,19 @@ const styles = StyleSheet.create({
         marginHorizontal:6
     },
     categoryContainer:{
-        flexDirection:"row",alignItems:"center",justifyContent:"space-between",paddingHorizontal:6
+        flexDirection:"row",alignItems:"center",justifyContent:"space-between",paddingHorizontal:10
     },linkText:{
         fontFamily:"Nunito600",
         color:"#3A643C",
         marginRight:10
     },
+    columnWrapper:{
+        justifyContent:"flex-start",
+        marginVertical:10
+    },
+    iconText:{
+        fontSize:12,
+        color:"#646665",
+        fontFamily:"Nunito500"
+    }
 })

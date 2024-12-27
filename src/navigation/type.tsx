@@ -5,5 +5,6 @@ export type RootStackParamList  = {
     doctorDetail:undefined,
     chooseConsultation:undefined,
     chooseDate:undefined,
-    chooseTime:undefined
+    chooseTime:undefined,
+    appoinmentConfirmed:undefined
 }
