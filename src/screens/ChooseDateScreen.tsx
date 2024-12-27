@@ -50,7 +50,7 @@ const ChooseDateScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <CustomHeader header={"Choose Date"} />
-            <CustomProgressBar currentStep={2} />
+            <CustomProgressBar totalStep={4} currentStep={2} />
             <DoctorInfo doctorName='Dr Prema' specialist='Male-Female Infertility' selectedOption='Chat Consultation - Free' />
             <View style={styles.subContainer}>
                 <Text style={styles.primaryText}>Pick Appointment Date</Text>

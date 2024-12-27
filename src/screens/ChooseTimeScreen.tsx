@@ -7,6 +7,8 @@ import DoctorInfo from '../components/DoctorInfo'
 import CustomItem from '../components/CustomItem'
 import CustomButton from '../components/CustomButton'
 import SelectedInfo from '../components/SelectedInfo'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigation/type'
 
 
 const ChooseTimeScreen = () => {
@@ -27,19 +29,20 @@ const ChooseTimeScreen = () => {
         }
 
     ]
-
+    
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
 
     return (
         <SafeAreaView style={styles.container}>
             <CustomHeader header='Choose Time Slot' />
-            <CustomProgressBar currentStep={3} />
+            <CustomProgressBar currentStep={3} totalStep={4} />
             <DoctorInfo doctorName='Dr Prema' specialist='Male-Female Infertility' selectedOption='Chat Consultation - Free' />
             <View style={styles.subContainer}>
                 <Text style={styles.primaryText} >Pick a time slot</Text>
                 <FlatList showsVerticalScrollIndicator={false} data={timeSlots} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => <CustomList title={item.section} data={item.time} />} />
             </View>
             <SelectedInfo />
-            <CustomButton text='Confirm Appointment' onPress={() => {}} />
+            <CustomButton text='Confirm Appointment' onPress={() => navigation.navigate("appoinmentConfirmed")} />
         </SafeAreaView>
     )
 }

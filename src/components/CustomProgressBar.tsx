@@ -2,15 +2,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 type CustomProgressBarProps = {
-  currentStep:number
+  currentStep:number,
+  totalStep:number
 }
 
 
-const CustomProgressBar = ({currentStep}:CustomProgressBarProps) => {
+const CustomProgressBar = ({currentStep,totalStep}:CustomProgressBarProps) => {
   return (
     <View style={styles.container}>
       {
-        [1,2,3,4].map((item,index) => <View key={index} style={[styles.loadingBar,index < currentStep ? {backgroundColor:"#3A643B"} : null]}></View>)
+        Array.from({length:4}).map((item,index) => <View key={index} style={[styles.loadingBar,index < currentStep ? {backgroundColor:"#3A643B"} : null]}></View>)
       }
     </View>
   )
