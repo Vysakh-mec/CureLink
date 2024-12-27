@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import HomeScreen from './src/screens/HomeScreen';
-import SelectConcernScreen from './src/screens/SelectConcernScreen';
 import { RootStackParamList } from './src/navigation/type';
 import * as SplashScreen from "expo-splash-screen"
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
+import HomeScreen from './src/screens/HomeScreen';
+import SelectConcernScreen from './src/screens/SelectConcernScreen';
 import ConsultScreen from './src/screens/ConsultScreen';
 import DoctorDetailScreen from './src/screens/DoctorDetailScreen';
 import ChooseConsultationScreen from './src/screens/ChooseConsultationScreen';

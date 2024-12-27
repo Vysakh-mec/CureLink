@@ -19,7 +19,7 @@ const ChooseConsultationScreen = () => {
     <SafeAreaView style={styles.container}>
       
       <CustomHeader header="Choose Consultation" />
-      <CustomProgressBar currentStep={1} />
+      <CustomProgressBar currentStep={1} totalStep={4} />
       <DoctorInfo doctorName={"Dr Prerna"} specialist={"Male-Female Infertility"}   />
 
       <View style={styles.optionsContainer}>

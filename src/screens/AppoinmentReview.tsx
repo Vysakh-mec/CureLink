@@ -48,7 +48,7 @@ const AppoinmentReview = () => {
               <Text style={styles.buttonText}>Apply</Text>
             </TouchableOpacity>
           </View>
-          <CustomButton text='Make Payment' onPress={() => navigation.navigate("chooseConsultation")} />
+          <CustomButton text='Make Payment' onPress={() => navigation.navigate("appoinmentConfirmed")} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -3,13 +3,15 @@ import React from 'react'
 
 type CustomButtonProps = {
     text?:string,
-    onPress:Function
+    onPress:Function,
+    containerStyle?:object,
+    labelStyle?:object
 }
 
-const CustomButton = ({text , onPress}:CustomButtonProps) => {
+const CustomButton = ({ text , onPress , containerStyle , labelStyle }:CustomButtonProps) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onPress()}>
-        <Text style={styles.text}>{text}</Text>
+    <TouchableOpacity style={[styles.container,containerStyle]} onPress={() => onPress()}>
+        <Text style={[styles.text,labelStyle]}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
         borderRadius:12,
         alignSelf:"center",
         width:"90%",
-        marginBottom:25
+        marginBottom:20
     },
     text:{
         color:"white",
