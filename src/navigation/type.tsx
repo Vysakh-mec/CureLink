@@ -1,8 +1,10 @@
+import { DoctorDetails } from "../constant/types"
+
 export type RootStackParamList  = {
     home:undefined,
     selectConcern:undefined,
     consult:undefined,
-    doctorDetail:undefined,
+    doctorDetail:DoctorDetails,
     chooseConsultation:undefined,
     chooseDate:undefined,
     chooseTime:undefined,

@@ -1,20 +1,66 @@
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { ActivityIndicator, Image, KeyboardAvoidingView, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import GreenTick from "../../assets/icons/GreenTickIcon.svg"
 import CustomButton from '../components/CustomButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store/store'
 
 const AppoinmentReview = () => {
 
+  const appoinmentDate = useSelector((state: RootState) => state.booking.appointmentDate)
+  const doctor = useSelector((state: RootState) => state.booking.selectedDoctor)
+  const consultationType = useSelector((state: RootState) => state.booking.consulatationType)
+  const appoinmentTime = useSelector((state: RootState) => state.booking.appointmentTime)
+  const concern = useSelector((state: RootState) => state.booking.concern)
+  const [couponCode, setCouponCode] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
   const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+  const API_URL = process.env.EXPO_PUBLIC_API_URL
   
+  const handleSubmit = async () => {
+    let obj = {
+      doctor: doctor,
+      appoinmentDate: appoinmentDate,
+      appoinmentTime: appoinmentTime,
+      consultationType: consultationType,
+      couponCode: couponCode,
+      concern: concern
+    }
+    try {
+      setLoading(true)
+      const response = await fetch(API_URL + "/appointments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(obj)
+      })
+      
+      if (response.ok) {
+        console.log("Appoinment Succesfully Booked")
+        navigation.navigate("appoinmentConfirmed")
+      } else {
+        console.log("Erro adding an appointment")
+      }
+
+    } catch (error) {
+      console.log("Something went Wrong" + error)
+    } finally {
+      setLoading(false)
+    }
+
+  }
+
+
+
   return (
     <SafeAreaView style={styles.container}>
 
-      <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS == "ios" ? 'padding' : 'height'}>
-        <ScrollView style={{flexGrow:1}}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS == "ios" ? 'padding' : 'height'}>
+        <ScrollView style={{ flexGrow: 1 }}>
           <View style={styles.subContainer}>
             <Image source={{ uri: "https://picsum.photos/200/300?random=1" }} style={styles.image} />
             <GreenTick />
@@ -23,15 +69,11 @@ const AppoinmentReview = () => {
             <Text style={styles.secondaryHeaderText}>Thank you for choosing our Experts to help guide you</Text>
 
             <View style={styles.detailsContainer}>
-
-              <DetailItem label="Expert" value="Dr. Prema" />
-              <DetailItem label="Appoinment Date" value="23 November 2023" />
-              <DetailItem label="Appoinment Time" value="10:05 AM" />
-              <DetailItem label="Consultation Type" value="Chat Consultation" />
-              <DetailItem label="Consultation Fee" value="Free" />
-              
-
-             
+              <DetailItem label="Expert" value={doctor?.name} />
+              <DetailItem label="Appoinment Date" value={appoinmentDate?.day + " " + appoinmentDate?.month + " " + appoinmentDate?.year} />
+              <DetailItem label="Appoinment Time" value={appoinmentTime} />
+              <DetailItem label="Consultation Type" value={consultationType == 'chat' ? "Chat Consultation" : "Video Consultation"} />
+              <DetailItem label="Consultation Fee" value={consultationType == 'chat' ? "Free" : doctor?.video_consultation_fee.toString()} />
             </View>
           </View>
           <View style={styles.ellipseContainer}>
@@ -39,16 +81,26 @@ const AppoinmentReview = () => {
               Array.from({ length: 9 }).map((item, index) => <View key={index} style={styles.ellipse}></View>)
             }
           </View>
+          {
+            loading &&
+            <Modal transparent statusBarTranslucent >
+              <View style={{ backgroundColor: "rgba(0,0,0,0.5)", flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <View style={{ backgroundColor: "white", padding: 30, borderRadius: 20 }}>
+                  <ActivityIndicator size={30} color={"#3A643B"} />
+                </View>
+              </View>
+            </Modal>
+          }
           <View style={styles.couponContainer}>
             <View style={styles.inputContainer}>
               <Text style={styles.labelText}>Apply Coupon Code</Text>
-              <TextInput style={styles.input} placeholder='Enter here' />
+              <TextInput value={couponCode} onChangeText={(text) => setCouponCode(text)} style={styles.input} placeholder='Enter here' />
             </View>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity disabled={!couponCode.length} style={[styles.button, !couponCode.length ? { backgroundColor: "#E2E2E2" } : null]}  >
               <Text style={styles.buttonText}>Apply</Text>
             </TouchableOpacity>
           </View>
-          <CustomButton text='Make Payment' onPress={() => navigation.navigate("appoinmentConfirmed")} />
+          <CustomButton text='Make Payment' onPress={() => handleSubmit()} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -56,11 +108,11 @@ const AppoinmentReview = () => {
 }
 
 type DetailItemProps = {
-  label:string,
-  value:string
+  label: string,
+  value?: string
 }
 
-const DetailItem = ({label,value} : DetailItemProps) => {
+const DetailItem = ({ label, value }: DetailItemProps) => {
   return (
     <View style={styles.detailsItem}>
       <Text style={styles.secondaryText}>{label}</Text>
@@ -156,19 +208,19 @@ const styles = StyleSheet.create({
     color: "#646665",
     fontFamily: "Nunito400"
   },
-  input:{
-    fontFamily:"Nunito400",
-    paddingHorizontal:10
+  input: {
+    fontFamily: "Nunito400",
+    paddingHorizontal: 10
   },
-  button:{
-    backgroundColor:"#3A643B",
-    paddingVertical:12,
-    paddingHorizontal:20,
-    borderRadius:999
+  button: {
+    backgroundColor: "#3A643B",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 999
   },
-  buttonText:{
-    color:"white",
-    fontFamily:"Nunito500"
+  buttonText: {
+    color: "white",
+    fontFamily: "Nunito500"
   }
 
 })

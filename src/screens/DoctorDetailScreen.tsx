@@ -4,15 +4,31 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import CustomHeader from "../components/CustomHeader"
 import BulletIcon from "../../assets/icons/BulletIcon.svg"
 import ReviewItem from "../components/ReviewItem"
-import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import { RootStackParamList } from "../navigation/type"
 import CustomButton from "../components/CustomButton"
+import { DoctorDetails } from "../constant/types"
+import { iconMap } from "../constant/IconsMap"
+import { useDispatch } from "react-redux"
+import { setDoctor } from "../redux/slices/bookingSlice"
 
 const DoctorDetailScreen = () => {
 
     const navigation = useNavigation<NavigationProp<RootStackParamList>>()
-    
-    
+    const route = useRoute<RouteProp<{ params: DoctorDetails }, "params">>()
+    const details = route.params
+    const dispatch = useDispatch()
+
+    const handleBookConsultation = () => {
+        let obj = {
+            name: details.name,
+            specialist: details.specialist,
+            video_consultation_fee: details.video_consultation_fee,
+        }
+        dispatch(setDoctor(obj))
+        navigation.navigate("chooseConsultation")
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
@@ -23,23 +39,23 @@ const DoctorDetailScreen = () => {
                     <Image source={{
                         uri: "https://picsum.photos/200/300?random=1"
                     }} style={styles.image} />
-                    <Text style={styles.titleText}>Dr Prema</Text>
-                    <Text style={styles.secondaryTitleText}>Male-Female Infertility</Text>
+                    <Text style={styles.titleText}>{details.name}</Text>
+                    <Text style={styles.secondaryTitleText}>{details.specialist}</Text>
                 </View>
 
                 <View style={styles.rowContainer}>
                     <View style={styles.rowMiniContainer}>
-                        <Text style={styles.rowText}>3</Text>
+                        <Text style={styles.rowText}>{details.followers}</Text>
                         <Text style={styles.rowSubText}>Followers</Text>
                     </View>
 
                     <View style={styles.rowMiniContainer}>
-                        <Text style={styles.rowText}>7 years</Text>
+                        <Text style={styles.rowText}>{details.experience}</Text>
                         <Text style={styles.rowSubText}>Experience</Text>
                     </View>
 
                     <View style={styles.rowMiniContainer}>
-                        <Text style={styles.rowText}>4.8</Text>
+                        <Text style={styles.rowText}>{details.rating}</Text>
                         <Text style={styles.rowSubText}>Rating</Text>
                     </View>
                 </View>
@@ -48,10 +64,7 @@ const DoctorDetailScreen = () => {
                     <Text style={styles.primaryText}>Bio</Text>
                     <View style={styles.customContainer}>
                         <Text style={styles.secondaryText}>
-                            Ideal Ayurveda mart {"\n"}
-                            Ayurvedic Clinic {"\n"}
-                            Mahesh Nagar Ambala{"\n"}
-                            Ayurveda consultant (running the whole clinic, opd, management)
+                            {details.bio}
                         </Text>
                     </View>
                 </View>
@@ -59,70 +72,78 @@ const DoctorDetailScreen = () => {
                 <View style={styles.subContainer}>
                     <Text style={styles.primaryText}>Specializes in</Text>
                     <ScrollView horizontal>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
-                        <View style={{ height: 64, width: 64, marginRight: 16, backgroundColor: "#EAF2EA", borderRadius: 16 }}>
-                        </View>
+                        {
+                            details.specializes_in.map((item, index) => <CutomIcon key={index} name={item} />)
+                        }
                     </ScrollView>
                 </View>
 
                 <View style={styles.subContainer}>
                     <BulletHeader text={"Reviews and Ratings"} />
-
                     <View style={styles.customContainer}>
-                        <ReviewItem />
-                    </View>
-                    <View style={styles.customContainer}>
-                        <ReviewItem />
-                    </View>
-                    <View style={styles.customContainer}>
-                        <ReviewItem />
+                        {
+                            details.reviews.map((item, index) => <ReviewItem key={index} review={item} />)
+                        }
                     </View>
                 </View>
 
                 <View style={styles.subContainer}>
-                    <BulletHeader text={"Work Experiences"}/>
+                    <BulletHeader text={"Work Experiences"} />
 
                     <View style={styles.customContainer}>
-                        <Text style={styles.secondaryText}>Endocrinologist {"\n"}EndoCare Center{"\n"}Uptown</Text>
+                        {
+                            details.work_experience.map((item, index) => (
+                                <Text key={index} style={styles.secondaryText}>{item.role + "\n" + item.clinic + "\n" + item.location}</Text>
+                            ))
+                        }
                     </View>
                 </View>
 
                 <View style={styles.subContainer}>
                     <BulletHeader text="Academics" />
                     <View style={styles.customContainer}>
-                    <Text style={styles.secondaryText}>Harvard Medical School {"\n"}MD in Endocrinology{"\n"}2012</Text>
+                        {
+                            details.academics.map((item, index) => (
+                                <Text key={index} style={styles.secondaryText}>{item.institution + "\n" + item.degree + "\n" + item.year}</Text>
+                            ))
+                        }
                     </View>
                 </View>
 
-                <CustomButton text="Book Consultation" onPress={() => navigation.navigate("chooseConsultation")} />
+                <CustomButton text="Book Consultation" onPress={() => handleBookConsultation()} />
             </ScrollView>
         </SafeAreaView>
     )
 }
 
 type BulletHeaderProps = {
-    text:string
+    text: string
 }
 
 
-const BulletHeader = ({text}:BulletHeaderProps) => {
+const BulletHeader = ({ text }: BulletHeaderProps) => {
     return (
         <View style={styles.bulletContainer}>
             <BulletIcon />
             <Text style={styles.primaryText}>{text}</Text>
+        </View>
+    )
+}
+
+type CutomIconProps = {
+    name: string
+}
+
+
+const CutomIcon = ({ name }: CutomIconProps) => {
+
+    const IconComponent = iconMap[name]
+
+    return (
+        <View style={styles.iconContainer}>
+            {
+                IconComponent ? <IconComponent height={50} width={50} /> : null
+            }
         </View>
     )
 }
@@ -198,9 +219,18 @@ const styles = StyleSheet.create({
         padding: 12,
         borderRadius: 16
     },
-    bulletContainer:{ 
-        flexDirection: "row", 
-        columnGap: 10, 
-        alignItems: "center" 
+    bulletContainer: {
+        flexDirection: "row",
+        columnGap: 10,
+        alignItems: "center"
     },
+    iconContainer: {
+        height: 64,
+        width: 64,
+        marginRight: 16,
+        backgroundColor: "#EAF2EA",
+        borderRadius: 16,
+        alignItems: "center",
+        justifyContent: "center"
+    }
 })

@@ -5,11 +5,14 @@ import GreenTickIconLarge from "../../assets/icons/GreenTickLargeIcon.svg"
 import CustomButton from '../components/CustomButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store/store'
 
 const AppoinmentConfirmed = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>()
-
+  const doctor = useSelector((state:RootState) => state.booking.selectedDoctor)
+  const consultationType = useSelector((state:RootState) => state.booking.consulatationType)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -17,8 +20,8 @@ const AppoinmentConfirmed = () => {
         <Text style={styles.headerText}>Appointment Succesfully Booked</Text>
 
         <Image source={{ uri: "https://picsum.photos/200/300?random=1" }} style={styles.image} />
-        <Text style={styles.primaryText}>Dr. Prerna</Text>
-        <Text style={styles.secondaryText}>Video Consultation - 800 (paid)</Text>
+        <Text style={styles.primaryText}>{doctor?.name}</Text>
+        <Text style={styles.secondaryText}>{ consultationType == "chat" ? "Chat Consultaton - Free" : `Video Consultation - ${doctor?.video_consultation_fee}` }(paid)</Text>
 
         <Text style={styles.linkText}>86% of users who submitted their reports and shared detailed information with the doctor have successfully improved their health.</Text>
       </View>

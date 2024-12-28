@@ -3,18 +3,18 @@ import React from 'react'
 import StarIcon from "../../assets/icons/StarIcon.svg"
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import { DoctorListItemProps } from '../constant/types'
+import { useDispatch } from 'react-redux'
+import { setDoctor } from '../redux/slices/bookingSlice'
 
-type DoctorListItemProps = {
-    id:number
-}
 
 
-const DoctorListItem = ({id}:DoctorListItemProps) => {
+const DoctorListItem = ({details}:DoctorListItemProps) => {
     
     const navigation = useNavigation<NavigationProp<RootStackParamList>>()
 
-    const handleNavigation = () => {
-        navigation.navigate("doctorDetail")
+    const handleNavigation = () => {      
+        navigation.navigate("doctorDetail",details)
     }
     
     
@@ -26,19 +26,19 @@ const DoctorListItem = ({id}:DoctorListItemProps) => {
         }} style={styles.image} />
         {/* iMAGE */}
         <View style={styles.detailsContainer}>
-            <Text style={styles.headerText}>Dr Prema</Text>
-            <Text style={styles.subText}>Male-Female Infertility</Text>
-            <Text style={styles.subText}>7 years of Experience</Text>
+            <Text style={styles.headerText}>{details.name}</Text>
+            <Text style={styles.subText}>{details.specialist}</Text>
+            <Text style={styles.subText}>{details.experience} of Experience</Text>
             <View style={styles.starContainer}>
                 <StarIcon />
-                <Text style={styles.starText}>4.5 Stars</Text>
+                <Text style={styles.starText}>{details.rating} Stars</Text>
             </View>
         </View>
       </View>
       <View style={styles.lowerContainer}>
             <View style={styles.miniContainer}>
                 <Text style={styles.subText}>Video Consultation</Text>
-                <Text style={[styles.subText,{color:"black"}]}>₹800</Text>
+                <Text style={[styles.subText,{color:"black"}]}>₹ {details.video_consultation_fee}</Text>
             </View>
             <View style={styles.miniContainer}>
                 <Text style={styles.subText}>Chat Consultation</Text>

@@ -1,19 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import StarIcon from "../../assets/icons/StarIcon.svg"
+import { Review } from '../constant/types'
 
-const ReviewItem = () => {
+type ReviewItemProps = {
+  review:Review
+}
+
+const ReviewItem = ({review}:ReviewItemProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.starContainer}>
             {
-                [1,2,3,4,5].map((item,index) => <StarIcon key={index}  />)
+                Array.from({length:review.star}).map((item,index) => <StarIcon key={index}  />)
             }
       </View>
-      <Text style={styles.primaryText}>
-      Might be bit early to confirm but yes I can see noticeable difference in my hairfall. will write again after using it for longer periods
-      </Text>
-      <Text style={styles.secondaryText}>Sabarinath J ● 20 january 2023</Text>
+      <Text style={styles.primaryText}>{review.content}</Text>
+      <Text style={styles.secondaryText}>{review.postedName} ● {review.date} </Text>
     </View>
   )
 }

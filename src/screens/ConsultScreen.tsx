@@ -4,22 +4,44 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomHeader from '../components/CustomHeader'
 import FilterIcon from "../../assets/icons/FilterIcon.svg"
 import DoctorListItem from '../components/DoctorListItem'
+import { useSelector } from 'react-redux'
+import { RootState } from '../redux/store/store'
+import { DoctorDetails } from '../constant/types'
 
 const ConsultScreen = () => {
 
     const app_url = process.env.EXPO_PUBLIC_API_URL
-    const [doctorData, setDoctorData] = useState([])
+    const [doctorData, setDoctorData] = useState<DoctorDetails[]>([])
+    const [filteredDoctorData , setFilteredDoctorData] = useState<DoctorDetails[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
+    const [appliedFilters , setAppliedFilters] = useState<string[]>([])
+
+    const concern = useSelector((state:RootState) => state.booking.concern)
 
     useEffect(() => {
+        if (concern) {
+            setAppliedFilters([concern])
+        }
+    },[])
+    useEffect(() => {
+        setLoading(true)
         fetch(`${app_url}/doctors`)
             .then((response) => response.json())
             .then((data) => {
+                setLoading(false)
                 setDoctorData(data)
             })
             .catch(error => {
                 console.log(error.message)
             })
-    })
+    },[])
+
+    useEffect(() => {
+        if (concern) {
+            const filteredData = doctorData.filter((doctor) => doctor.specializes_in.includes(concern))
+            setFilteredDoctorData(filteredData)
+        }
+    },[concern,doctorData,appliedFilters])
 
 
     return (
@@ -27,26 +49,31 @@ const ConsultScreen = () => {
             <CustomHeader header="Consult" />
             <View style={styles.filterContainer}>
                 <ScrollView horizontal>
-                    <FilterItem />
-                    <FilterItem />
-                    
+                    {
+                        appliedFilters.map((item,index) => <FilterItem key={index} text={item} /> )
+                    }                    
                 </ScrollView>
                 <TouchableOpacity style={styles.filterButton}>
                     <FilterIcon />
                     <Text style={styles.filterButtonText}>Filter</Text>
                 </TouchableOpacity>
             </View>
-            <FlatList data={[0,1,2,3,4,5,6,7]} renderItem={({item}) => <DoctorListItem id={item}  />} keyExtractor={(item,index) => index.toString()} />
+            <FlatList data={filteredDoctorData} renderItem={({item}) => <DoctorListItem details={item}  />} keyExtractor={(item,index) => index.toString()} />
         </SafeAreaView>
     )
 }
 
 export default ConsultScreen
 
-const FilterItem = () => {
+type FilterItemProps = {
+    text:string
+}
+
+
+const FilterItem = ({text}:FilterItemProps) => {
     return (
         <View style={styles.filterItemContainer}>
-            <Text style={styles.filterItemText}>PCOS</Text>
+            <Text style={styles.filterItemText}>{text}</Text>
         </View>
     )
 }

@@ -3,16 +3,21 @@ import React from 'react'
 import CalenderIcon from "../../assets/icons/CalenderIcon.svg"
 import ClockIcon from "../../assets/icons/ClockIcon.svg"
 
-const SelectedInfo = () => {
+type SelectedInfoProps = {
+    date?: string,
+    time?: string
+}
+
+const SelectedInfo = ({date,time}:SelectedInfoProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.subContainer}>
                 <CalenderIcon />
-                <Text style={styles.text}>06 Nov</Text>
+                <Text style={styles.text}>{date ? date : "-- --"}</Text>
             </View>
             <View style={styles.subContainer}>
                 <ClockIcon />
-                <Text style={styles.text}>10:00 AM</Text>
+                <Text style={styles.text}>{time ? time : " --  --"}</Text>
             </View>
         </View>
     )

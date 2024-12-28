@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import RadioActive from "../../assets/icons/RadioActive.svg"
@@ -9,11 +9,22 @@ import CustomButton from '../components/CustomButton'
 import DoctorInfo from '../components/DoctorInfo'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store/store'
+import { setConsultationType } from '../redux/slices/bookingSlice'
 
 
 const ChooseConsultationScreen = () => {
 
+  const selectedDoctor = useSelector((state:RootState) => state.booking.selectedDoctor)
+  const dispatch = useDispatch()
+  const handleSubmit = () => {
+    dispatch(setConsultationType(activeRadio))
+    navigation.navigate("chooseDate")
+  }
+
  const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+ const [activeRadio ,setActiveRadio] = useState("chat")
   
   return (
     <SafeAreaView style={styles.container}>
@@ -23,19 +34,23 @@ const ChooseConsultationScreen = () => {
       <DoctorInfo doctorName={"Dr Prerna"} specialist={"Male-Female Infertility"}   />
 
       <View style={styles.optionsContainer}>
-        <View style={styles.option}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => setActiveRadio("chat")} style={styles.option}>
             <Text style={styles.secondaryText}>Chat Consultation</Text>
             <Text style={styles.optionLabel}>Free</Text>
-            <RadioActive />
+            {
+              activeRadio === "chat" ? <RadioActive /> : <RadioInActive />
+            }
             <Text style={styles.recommendedText}>Recommended</Text>
-        </View>
-        <View style={styles.option}>
+        </TouchableOpacity>
+        <TouchableOpacity  style={styles.option} activeOpacity={0.8} onPress={() => setActiveRadio("video")}>
             <Text style={styles.secondaryText}>Video Consultation</Text>
-            <Text style={styles.optionLabel}>800</Text>
-            <RadioInActive />
-        </View>
+            <Text style={styles.optionLabel}>₹ {selectedDoctor?.video_consultation_fee}</Text>
+            {
+              activeRadio === "video" ? <RadioActive /> : <RadioInActive />
+            }
+        </TouchableOpacity>
       </View>
-      <CustomButton text={"Proceed"} onPress={() => navigation.navigate("chooseDate")} />
+      <CustomButton text={"Proceed"} onPress={() => handleSubmit()} />
     </SafeAreaView>
   )
 }

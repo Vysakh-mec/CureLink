@@ -5,12 +5,13 @@ type CustomButtonProps = {
     text?:string,
     onPress:Function,
     containerStyle?:StyleProp<ViewStyle>,
-    labelStyle?:StyleProp<TextStyle>
+    labelStyle?:StyleProp<TextStyle>,
+    disabled?:boolean
 }
 
-const CustomButton = ({ text , onPress , containerStyle , labelStyle }:CustomButtonProps) => {
+const CustomButton = ({ text , onPress , containerStyle , labelStyle , disabled }:CustomButtonProps) => {
   return (
-    <TouchableOpacity style={[styles.container,containerStyle]} onPress={() => onPress()}>
+    <TouchableOpacity disabled={disabled} style={[styles.container,containerStyle,disabled ? { backgroundColor:"#E2E2E2"} : null]} onPress={() => onPress()}>
         <Text style={[styles.text,labelStyle]}>{text}</Text>
     </TouchableOpacity>
   )

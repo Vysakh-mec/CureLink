@@ -8,24 +8,40 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import CustomButton from '../components/CustomButton'
 import { iconMap } from '../constant/IconsMap'
+import { useDispatch } from 'react-redux'
+import { setConcern } from '../redux/slices/bookingSlice'
 
 type ConcernListProp =  {
     category:string,
-    concerns:ConcernDetail[]
+    concerns:ConcernDetail[],
+    handlePress:(concern: string) => void,
+    selectedConcern:string | null
 }
 
 type ConcernDetail = {
     id:number,
     name:string,
+    handleClick:Function,
+    selectedConcern:string | null
 }
 
 
 const SelectConcernScreen = () => {
 
     const [concerns , setConcerns] = useState<ConcernListProp[]>([])
-    const [loading , setLoading] = useState(false)
+    const [loading , setLoading] = useState<Boolean>(false)
+    const [selectedConcern , setSelectedConcern] = useState<string | null>(null)
+    
     const api_url = process.env.EXPO_PUBLIC_API_URL
     const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+    const dispatch = useDispatch()
+    
+    const handleConcernSelection = () => {
+        if (selectedConcern) {
+            dispatch(setConcern(selectedConcern))
+        }
+        navigation.navigate("consult")
+    }
     
     useEffect(() => {
         setLoading(true)
@@ -58,10 +74,10 @@ const SelectConcernScreen = () => {
                 :
                 
 
-                    <FlatList data={concerns} renderItem={({item}) => <ConcernList category={item.category} concerns={item.concerns} />} keyExtractor={(item,index) => index.toString()}  />
+                    <FlatList data={concerns} renderItem={({item}) => <ConcernList selectedConcern={selectedConcern} handlePress={setSelectedConcern} category={item.category} concerns={item.concerns} />} keyExtractor={(item,index) => index.toString()}  />
             }
                 
-            <CustomButton text="Confirm Concern" onPress={() => navigation.navigate("consult")} />
+            <CustomButton disabled={!selectedConcern ? true : false} text="Confirm Concern" onPress={() => handleConcernSelection()} />
                 
         </SafeAreaView>
     )
@@ -70,7 +86,7 @@ const SelectConcernScreen = () => {
 
 
 
-const ConcernList = ({category,concerns} : ConcernListProp ) => {
+const ConcernList = ({category,concerns,handlePress , selectedConcern} : ConcernListProp ) => {
 
     return (
         <View style={{marginBottom:20}}>
@@ -82,23 +98,25 @@ const ConcernList = ({category,concerns} : ConcernListProp ) => {
                         : null
                 }
             </View>
-            
-            <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={concerns} renderItem={({item}) => <CustomIcon name={item.name} id={item.id} />} />
+
+            <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={concerns} renderItem={({item}) => <CustomIcon selectedConcern={selectedConcern} handleClick={handlePress} name={item.name} id={item.id} />} />
             
         </View>
     )
 }
 
 
-const CustomIcon = ({id , name} : ConcernDetail) => {
+const CustomIcon = ({id , name, handleClick , selectedConcern} : ConcernDetail) => {
 
     const IconComponent = iconMap[name]
     
     return(
-        <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => handleClick(name)} style={styles.iconContainer}>
+            <View style={[styles.iconWrapper, name == selectedConcern ? {borderColor:"#3A643B"} : null]}>
             {IconComponent ? <IconComponent  /> : <Hypertension />}
+            </View>
             <Text style={styles.iconText}>{name}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -132,13 +150,6 @@ const styles = StyleSheet.create({
     input: {
         flex: 1
     },
-    iconGrid:{
-        flexDirection:"row",
-        justifyContent:"space-between",
-        flexWrap:"wrap",
-        marginVertical:24,
-        rowGap:20,
-    },
     iconContainer:{
         alignItems:"center",
         rowGap:10,
@@ -164,5 +175,10 @@ const styles = StyleSheet.create({
         fontSize:12,
         color:"#646665",
         fontFamily:"Nunito500"
+    },
+    iconWrapper:{
+        borderWidth:2,
+        borderColor:"white",
+        borderRadius:999
     }
 })

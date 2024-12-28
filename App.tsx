@@ -16,6 +16,8 @@ import AppoinmentReview from './src/screens/AppoinmentReview';
 import AppoinmentConfirmed from './src/screens/AppoinmentConfirmed';
 import SkipScreen from './src/screens/SkipScreen';
 import MyBookingScreen from './src/screens/MyBookingScreen';
+import { Provider } from 'react-redux';
+import store from './src/redux/store/store';
 
 
 SplashScreen.preventAutoHideAsync()
@@ -43,6 +45,7 @@ export default function App() {
   }
   
   return (
+    <Provider store={store}>
     <NavigationContainer >
       <StatusBar style='dark' />
       <Stack.Navigator initialRouteName='home'screenOptions={{
@@ -64,6 +67,7 @@ export default function App() {
         <Stack.Screen name='myBooking' component={MyBookingScreen} />  
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 

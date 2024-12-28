@@ -8,18 +8,32 @@ import CustomButton from '../components/CustomButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import CustomItem from '../components/CustomItem'
+import { setAppointmentDate } from '../redux/slices/bookingSlice'
+import { useDispatch } from 'react-redux'
+import SelectedInfo from '../components/SelectedInfo'
 
 type DateObject = {
     day:string,
     month:string,
-    weekdays:string
+    weekdays:string,
+    year:string
 }
 
 const ChooseDateScreen = () => {
 
     const [days, setDays] = useState<DateObject[]>([])
     const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+    const [selectedDate , setSelectedDate] = useState<DateObject | null>(null)
+    const dispatch = useDispatch()
 
+    const handleSubmit = () => {
+        if (selectedDate) {
+            dispatch(setAppointmentDate(selectedDate))
+        }
+        navigation.navigate('chooseTime')    
+    }
+
+    
     const getNext15Days = () => {
 
         const now = new Date();
@@ -32,7 +46,8 @@ const ChooseDateScreen = () => {
             const dayObject = {
                 day:date.toLocaleDateString("en-GB",{day:"2-digit"}),
                 month:date.toLocaleDateString("en-GB",{month:"short"}),
-                weekdays:date.toLocaleDateString("en-GB",{weekday:"long"})
+                weekdays:date.toLocaleDateString("en-GB",{weekday:"long"}),
+                year:date.toLocaleDateString("en-GB",{year:"numeric"})
             }
             
             next15Days.push(dayObject);
@@ -55,8 +70,9 @@ const ChooseDateScreen = () => {
             <View style={styles.subContainer}>
                 <Text style={styles.primaryText}>Pick Appointment Date</Text>
             </View>
-            <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={days} renderItem={({item}) => <CustomItem mainText={item.day+" "+item.month} subText={item.weekdays} />} />
-            <CustomButton text='Confirm Date' onPress={() => navigation.navigate("chooseTime")} />
+            <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={days} renderItem={({item}) => <CustomItem type="date" date={item} handlePress={setSelectedDate}  active={JSON.stringify(selectedDate) == JSON.stringify(item)} />} />
+            <SelectedInfo date={ selectedDate ? (selectedDate?.day + " " + selectedDate?.month) : undefined} />
+            <CustomButton disabled={selectedDate ? false : true} text='Confirm Date' onPress={() => handleSubmit()} />
         </SafeAreaView>
     )
 }

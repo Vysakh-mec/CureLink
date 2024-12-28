@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
-import React, { act, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AppointmentItem from '../components/AppointmentItem'
@@ -7,6 +7,18 @@ import AppointmentItem from '../components/AppointmentItem'
 const MyBookingScreen = () => {
 
     const [activeTab, setActiveTab] = useState<String>('Appointments')
+    const [appointmentData,setAppointmentData] = useState([])
+    const API_URL = process.env.EXPO_PUBLIC_API_URL
+
+    useEffect(() => {
+        fetch(API_URL+"/appointments")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+        }).catch((error) => {
+            console.log(error)
+        })
+    },[])
     
   return (
     <SafeAreaView style={styles.container}>

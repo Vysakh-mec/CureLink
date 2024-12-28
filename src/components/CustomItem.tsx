@@ -1,18 +1,35 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 type CustomItemProps = {
-    mainText:string,
-    subText?:string
+    type:string;
+    date?:Date;
+    time?:string;
+    active?:boolean;
+    handlePress:Function;
+}
+type Date = {
+    day:string,
+    month:string,
+    weekdays:string,
+    year:string,
 }
 
 
-const CustomItem = ({mainText , subText} : CustomItemProps) => {
+const CustomItem = ({ type , date , time, active, handlePress} : CustomItemProps) => {
+    
     return (
-        <View style={styles.container}>
-            <Text style={styles.primaryText}>{mainText}</Text>
-            <Text style={styles.secondaryText}>{subText}</Text>
-        </View>
+        <TouchableOpacity onPress={() => handlePress(type == "date" ? date : time)} activeOpacity={0.8} style={[styles.container, active ?  styles.activeContainer : null]}>
+            <Text style={[styles.primaryText,active ? styles.activeText : null]}>
+                {
+                    type == "date" ? date?.day+" "+date?.month : time
+                }
+            </Text>
+            {
+                type == "date" && 
+                <Text style={[styles.secondaryText,active ? styles.activeText : null]}>{date?.weekdays}</Text>
+            }
+        </TouchableOpacity>
     )
 }
 
@@ -29,10 +46,18 @@ const styles = StyleSheet.create({
     },
     primaryText:{
         fontSize:14,
-        fontFamily:"Nunito400"
+        fontFamily:"Nunito400",
+        color:"black"
     },
     secondaryText:{
         fontSize:12,
         fontFamily:"Nunito500",
+        color:"black"
     },
+    activeContainer:{
+        backgroundColor:"#3A643B"
+    },
+    activeText:{
+        color:"white"
+    }
 })
