@@ -11,5 +11,6 @@ export type RootStackParamList  = {
     appoinmentReview:undefined,
     appoinmentConfirmed:undefined,
     skipScreen:undefined,
-    myBooking:undefined
+    myBooking:undefined,
+    concernDetail:undefined
 }

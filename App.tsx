@@ -18,6 +18,7 @@ import SkipScreen from './src/screens/SkipScreen';
 import MyBookingScreen from './src/screens/MyBookingScreen';
 import { Provider } from 'react-redux';
 import store from './src/redux/store/store';
+import ConcernDetailScreen from './src/screens/ConcernDetailScreen';
 
 
 SplashScreen.preventAutoHideAsync()
@@ -65,6 +66,7 @@ export default function App() {
         <Stack.Screen name='appoinmentConfirmed' component={AppoinmentConfirmed}  />
         <Stack.Screen name='skipScreen' component={SkipScreen} />
         <Stack.Screen name='myBooking' component={MyBookingScreen} />  
+        <Stack.Screen name='concernDetail' component={ConcernDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

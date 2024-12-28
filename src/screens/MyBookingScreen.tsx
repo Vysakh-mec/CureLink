@@ -1,8 +1,9 @@
-import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
-import React, { act, useEffect, useState } from 'react'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, {  useEffect, useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AppointmentItem from '../components/AppointmentItem'
+
 
 const MyBookingScreen = () => {
 
@@ -14,7 +15,7 @@ const MyBookingScreen = () => {
         fetch(API_URL+"/appointments")
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
+            setAppointmentData(data)
         }).catch((error) => {
             console.log(error)
         })
@@ -34,8 +35,8 @@ const MyBookingScreen = () => {
         </View>
         {
             activeTab == "Appointments" 
-            ? <AppointmentItem /> 
-            
+            ? 
+            <FlatList data={appointmentData} renderItem={({item}) => <AppointmentItem data={item} /> }  keyExtractor={(item,index) => index.toString()}/>
             : 
             <View style={{justifyContent:"center",flex:1}}>
                 <Text style={{textAlign:"center",fontFamily:"Nunito600",fontSize:28,color:"gray"}} >No Orders Found</Text>

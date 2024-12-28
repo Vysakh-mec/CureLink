@@ -13,6 +13,7 @@ const SkipScreen = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>()
     const doctor = useSelector((state:RootState) =>state.booking.selectedDoctor )
     const consultationType = useSelector((state:RootState) => state.booking.consulatationType)
+    const Medicalprogress = useSelector((state:RootState) => state.booking.medicalProgress)
     
     return (
         <SafeAreaView style={styles.container}>
@@ -29,7 +30,7 @@ const SkipScreen = () => {
                 <Text style={styles.secondaryHeaderText}>We understand your concern in skipping these step.</Text>
                 <Text style={styles.linkText}>If you ever feel ready, you can always provide this information to help Doctor improve your care.</Text>
             </View>
-            <CustomButton onPress={() => {}} text='Continue Uploading' labelStyle={{color:"#3A643C"}} containerStyle={{backgroundColor:"white"}} />
+            <CustomButton onPress={() => navigation.navigate("concernDetail")} text={`Continue Uploading (${Medicalprogress}/3)`} labelStyle={{color:"#3A643C"}} containerStyle={{backgroundColor:"white"}} />
             <CustomButton onPress={() => navigation.navigate("myBooking")} text='View My Appoinments' />
         </SafeAreaView>
     )

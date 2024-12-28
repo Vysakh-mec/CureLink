@@ -16,7 +16,7 @@ interface BookingState {
     concern: string | null;
     selectedDoctor: Doctor | null;
     medicalDetailsStatus: 'pending' | 'uploading' | 'completed' | 'skipped';
-    skipStep: number;
+    medicalProgress: number;
     appointmentDate:Date | null;
     appointmentTime:string;
     consulatationType:string;
@@ -27,7 +27,7 @@ const initialState:BookingState= {
     concern:null,
     selectedDoctor:null,
     medicalDetailsStatus:'pending',
-    skipStep:0,
+    medicalProgress:0,
     appointmentDate:null,
     appointmentTime:"",
     consulatationType:""
@@ -49,8 +49,8 @@ const bookingSlice = createSlice({
         setMedicalDetailsStatus(state,action:PayloadAction<'pending' | 'uploading' | 'completed' | 'skipped'>) {
             state.medicalDetailsStatus = action.payload
         },
-        setSkipStep(state,action:PayloadAction<number>) {
-            state.skipStep = action.payload
+        setMedicalProgress(state,action:PayloadAction<number>) {
+            state.medicalProgress = action.payload
         },
         setAppointmentDate(state,action:PayloadAction<Date>) {
             state.appointmentDate = action.payload
@@ -62,6 +62,6 @@ const bookingSlice = createSlice({
 })
 
 
-export const {setConcern , setDoctor, setAppointmentDate,setConsultationType,setAppointmentTime , setMedicalDetailsStatus , setSkipStep} = bookingSlice.actions
+export const {setConcern , setDoctor, setAppointmentDate,setConsultationType,setAppointmentTime , setMedicalDetailsStatus , setMedicalProgress} = bookingSlice.actions
 
 export default bookingSlice.reducer

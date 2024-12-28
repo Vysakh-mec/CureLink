@@ -9,10 +9,12 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-picker/picker": "^2.10.2",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.1.1",
     "@reduxjs/toolkit": "^2.5.0",
     "expo": "~52.0.22",
+    "expo-constants": "~17.0.3",
     "expo-font": "~13.0.2",
     "expo-splash-screen": "~0.29.18",
     "expo-status-bar": "~2.0.0",
@@ -24,8 +26,7 @@
     "react-native-screens": "~4.4.0",
     "react-native-svg": "15.8.0",
     "react-native-svg-transformer": "^1.5.0",
-    "react-redux": "^9.2.0",
-    "expo-constants": "~17.0.3"
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

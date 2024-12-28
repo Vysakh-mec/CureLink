@@ -27,7 +27,7 @@ const AppoinmentConfirmed = () => {
       </View>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
         <CustomButton text='Skip' onPress={() => navigation.navigate("skipScreen")} containerStyle={{ backgroundColor: "white", borderWidth: 1, borderColor: "#3A643C" }} labelStyle={{ color: "#3A643C" }} />
-        <CustomButton text='Upload Health Records' onPress={() => { }} />
+        <CustomButton text='Upload Health Records' onPress={() => navigation.navigate("concernDetail")} />
       </View>
     </SafeAreaView>
   )

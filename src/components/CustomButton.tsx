@@ -11,7 +11,7 @@ type CustomButtonProps = {
 
 const CustomButton = ({ text , onPress , containerStyle , labelStyle , disabled }:CustomButtonProps) => {
   return (
-    <TouchableOpacity disabled={disabled} style={[styles.container,containerStyle,disabled ? { backgroundColor:"#E2E2E2"} : null]} onPress={() => onPress()}>
+    <TouchableOpacity activeOpacity={0.5} disabled={disabled} style={[styles.container,containerStyle,disabled ? { backgroundColor:"#E2E2E2"} : null]} onPress={() => onPress()}>
         <Text style={[styles.text,labelStyle]}>{text}</Text>
     </TouchableOpacity>
   )

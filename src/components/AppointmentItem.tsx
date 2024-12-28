@@ -5,13 +5,39 @@ import ClockIcon from '../../assets/icons/ClockIcon.svg'
 import NextButton from '../../assets/icons/NextButton.svg'
 import CustomButton from './CustomButton'
 
-const AppointmentItem = () => {
+type AppointmentItemProps = {
+    data:AppointmentItem
+}
+
+type AppointmentItem = {
+    id:string,
+    doctor:{
+        name:string,
+        specialist:string,
+        video_consultation_fee:number
+    },
+    appoinmentDate:{
+        day:string,
+        month:string,
+        weekdays:string,
+        year:string
+    },
+    appoinmentTime:string,
+    consultationType:string,
+    couponCode:string,
+    concern:string
+}
+
+const AppointmentItem = ({data} : AppointmentItemProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
                 <View >
-                    <Text style={styles.primaryText}>Dr. Prema</Text>
-                    <Text style={styles.secondaryText}>Male-Female Infertility</Text>
+                    <Text style={styles.primaryText}>{data.doctor.name}</Text>
+                    <View style={styles.headerContainer}>
+                    <Text style={styles.secondaryText}>{data.doctor.specialist} </Text>
+                    <Text style={styles.statusText}>pending</Text>
+                    </View>
                 </View>
                 <Image source={{ uri: "https://picsum.photos/200/300?random=1" }} style={styles.image} />
             </View>
@@ -20,11 +46,11 @@ const AppointmentItem = () => {
                 <View style={styles.iconsContainer}>
                     <View style={styles.iconTextContainer}>
                         <CalenderIcon />                        
-                        <Text style={styles.secondaryText}>12th May 2021</Text>
+                        <Text style={styles.secondaryText}>{data.appoinmentDate.day +" " + data.appoinmentDate.month+" "+data.appoinmentDate.year }</Text>
                     </View>
                     <View style={styles.iconTextContainer}>
                         <ClockIcon />
-                        <Text style={styles.secondaryText}>10:30 AM</Text>
+                        <Text style={styles.secondaryText}>{data.appoinmentTime}</Text>
                     </View>
                 </View>
 
@@ -77,7 +103,7 @@ const styles = StyleSheet.create({
     secondaryText: {
         fontSize:12,
         fontFamily:"Nunito400",
-        marginVertical:5
+        marginVertical:5,
     },
     iconTextContainer:{
         flexDirection:"row",
@@ -115,5 +141,14 @@ const styles = StyleSheet.create({
     footerContainer:{
         flexDirection:"row",
         marginTop:10
+    },
+    statusText:{
+        color:"#B26B17",
+        backgroundColor:"#FEF6ED",
+        fontFamily:"Nunito600",
+        borderRadius:999,
+        paddingVertical:4,
+        paddingHorizontal:8,
+        marginHorizontal:10
     }
 })
