@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -11,85 +11,112 @@ import { iconMap } from '../constant/IconsMap'
 import { useDispatch } from 'react-redux'
 import { setConcern } from '../redux/slices/bookingSlice'
 
-type ConcernListProp =  {
-    category:string,
-    concerns:ConcernDetail[],
-    handlePress:(concern: string) => void,
-    selectedConcern:string | null
+type Concern = {
+    name: string,
+    id: number
 }
-
 type ConcernDetail = {
-    id:number,
-    name:string,
-    handleClick:Function,
-    selectedConcern:string | null
+    category: string,
+    concerns: Concern[]
 }
-
+type ConcernListProp = {
+    category: string,
+    concerns: Concern[],
+    handlePress: Function,
+    selectedConcern: string | null
+}
+type CustomIconProp = {
+    id: number,
+    name: string,
+    handleClick: Function,
+    selectedConcern: string | null
+}
 
 const SelectConcernScreen = () => {
 
-    const [concerns , setConcerns] = useState<ConcernListProp[]>([])
-    const [loading , setLoading] = useState<Boolean>(false)
-    const [selectedConcern , setSelectedConcern] = useState<string | null>(null)
-    
+    const [concerns, setConcerns] = useState<ConcernDetail[]>([])
+    const [loading, setLoading] = useState<Boolean>(false)
+    const [selectedConcern, setSelectedConcern] = useState<string | null>(null)
+    const [filteredData, setFilteredData] = useState<ConcernDetail[]>([])
+    const [searchTerm, setSearchTerm] = useState("")
+
     const api_url = process.env.EXPO_PUBLIC_API_URL
     const navigation = useNavigation<NavigationProp<RootStackParamList>>()
     const dispatch = useDispatch()
-    
-    const handleConcernSelection = () => {
+
+    const handleSubmit = () => {
         if (selectedConcern) {
             dispatch(setConcern(selectedConcern))
+            navigation.navigate("consult")
         }
-        navigation.navigate("consult")
     }
-    
+
+    useEffect(() => {
+        if (searchTerm) {
+            const filteredData = concerns.map((category) => ({
+                ...category,
+                concerns: category.concerns.filter((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            }))
+            setFilteredData(filteredData.filter((category) => category.concerns.length > 0))
+        } else {
+            setFilteredData(concerns)
+        }
+    }, [searchTerm, concerns])
+
     useEffect(() => {
         setLoading(true)
         fetch(`${api_url}/concerns`)
-        .then((response) => response.json())
-        .then((data) => {
-            setLoading(false)
-            setConcerns(data)
-        }).catch((error) => {
-            setLoading(false)
-            console.log(error)
-        })
-    },[])
+            .then((response) => response.json())
+            .then((data) => {
+                setLoading(false)
+                setConcerns(data)
+            }).catch((error) => {
+                setLoading(false)
+                Alert.alert("Something went wrong", error.message)
+            })
+    }, [])
 
-    
     return (
         <SafeAreaView style={styles.container}>
             <CustomHeader header={"Select Concern"} />
-
             <View style={styles.subContainer}>
                 <Text style={styles.labelText}>Please select your concern</Text>
                 <View style={styles.inputContainer}>
                     <SearchIcon />
-                    <TextInput placeholderTextColor={"#ACBAAC"} placeholder='Search for concern here' style={styles.input} />
+                    <TextInput
+                        value={searchTerm}
+                        onChangeText={(text) => setSearchTerm(text)}
+                        placeholderTextColor={"#ACBAAC"}
+                        placeholder='Search for concern here'
+                        style={styles.input}
+                    />
                 </View>
             </View>
-                {
-                    loading ? 
-                    <ActivityIndicator size={50} color={"#3A643B"}  />
-                :
-                
-
-                    <FlatList data={concerns} renderItem={({item}) => <ConcernList selectedConcern={selectedConcern} handlePress={setSelectedConcern} category={item.category} concerns={item.concerns} />} keyExtractor={(item,index) => index.toString()}  />
+            {
+                loading ?
+                    <ActivityIndicator size={50} color={"#3A643B"} />
+                    :
+                    <FlatList
+                        data={filteredData}
+                        renderItem={({ item }) =>
+                            <ConcernList
+                                selectedConcern={selectedConcern}
+                                handlePress={setSelectedConcern}
+                                category={item.category}
+                                concerns={item.concerns}
+                            />}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
             }
-                
-            <CustomButton disabled={!selectedConcern ? true : false} text="Confirm Concern" onPress={() => handleConcernSelection()} />
-                
+
+            <CustomButton disabled={!selectedConcern} text="Confirm Concern" onPress={() => handleSubmit()} />
         </SafeAreaView>
     )
 }
 
-
-
-
-const ConcernList = ({category,concerns,handlePress , selectedConcern} : ConcernListProp ) => {
-
+const ConcernList = ({ category, concerns, handlePress, selectedConcern }: ConcernListProp) => {
     return (
-        <View style={{marginBottom:20}}>
+        <View style={{ marginBottom: 20 }}>
             <View style={styles.categoryContainer}>
                 <Text style={styles.categoryText}>{category}</Text>
                 {
@@ -98,31 +125,35 @@ const ConcernList = ({category,concerns,handlePress , selectedConcern} : Concern
                         : null
                 }
             </View>
-
-            <FlatList numColumns={3} columnWrapperStyle={styles.columnWrapper} data={concerns} renderItem={({item}) => <CustomIcon selectedConcern={selectedConcern} handleClick={handlePress} name={item.name} id={item.id} />} />
-            
+            <FlatList
+                numColumns={3}
+                columnWrapperStyle={styles.columnWrapper}
+                data={concerns}
+                renderItem={({ item }) =>
+                    <CustomIcon
+                        selectedConcern={selectedConcern}
+                        handleClick={handlePress}
+                        name={item.name}
+                        id={item.id}
+                    />}
+            />
         </View>
     )
 }
 
-
-const CustomIcon = ({id , name, handleClick , selectedConcern} : ConcernDetail) => {
-
+const CustomIcon = ({ id, name, handleClick, selectedConcern }: CustomIconProp) => {
     const IconComponent = iconMap[name]
-    
-    return(
+    return (
         <TouchableOpacity onPress={() => handleClick(name)} style={styles.iconContainer}>
-            <View style={[styles.iconWrapper, name == selectedConcern ? {borderColor:"#3A643B"} : null]}>
-            {IconComponent ? <IconComponent  /> : <Hypertension />}
+            <View style={[styles.iconWrapper, name == selectedConcern ? { borderColor: "#3A643B" } : null]}>
+                {IconComponent ? <IconComponent /> : <Hypertension />}
             </View>
             <Text style={styles.iconText}>{name}</Text>
         </TouchableOpacity>
     )
 }
 
-
 export default SelectConcernScreen
-
 
 const styles = StyleSheet.create({
     container: {
@@ -150,35 +181,38 @@ const styles = StyleSheet.create({
     input: {
         flex: 1
     },
-    iconContainer:{
-        alignItems:"center",
-        rowGap:10,
-        width:"33%",
+    iconContainer: {
+        alignItems: "center",
+        rowGap: 10,
+        width: "33%",
     },
-    categoryText:{
-        fontSize:14,
-        fontFamily:"Nunito400",
-        marginHorizontal:6
+    categoryText: {
+        fontSize: 14,
+        fontFamily: "Nunito400",
+        marginHorizontal: 6
     },
-    categoryContainer:{
-        flexDirection:"row",alignItems:"center",justifyContent:"space-between",paddingHorizontal:10
-    },linkText:{
-        fontFamily:"Nunito600",
-        color:"#3A643C",
-        marginRight:10
+    categoryContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 10
+    }, linkText: {
+        fontFamily: "Nunito600",
+        color: "#3A643C",
+        marginRight: 10
     },
-    columnWrapper:{
-        justifyContent:"flex-start",
-        marginVertical:10
+    columnWrapper: {
+        justifyContent: "flex-start",
+        marginVertical: 10
     },
-    iconText:{
-        fontSize:12,
-        color:"#646665",
-        fontFamily:"Nunito500"
+    iconText: {
+        fontSize: 12,
+        color: "#646665",
+        fontFamily: "Nunito500"
     },
-    iconWrapper:{
-        borderWidth:2,
-        borderColor:"white",
-        borderRadius:999
+    iconWrapper: {
+        borderWidth: 2,
+        borderColor: "white",
+        borderRadius: 999
     }
 })

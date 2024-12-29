@@ -52,7 +52,7 @@ export default function App() {
     <Provider store={store}>
     <NavigationContainer >
       <StatusBar style='dark' />
-      <Stack.Navigator initialRouteName='attachReport'screenOptions={{
+      <Stack.Navigator initialRouteName='home'screenOptions={{
         headerShown:false,
         cardStyle:{
           backgroundColor:"white"
