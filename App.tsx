@@ -21,6 +21,7 @@ import store from './src/redux/store/store';
 import ConcernDetailScreen from './src/screens/ConcernDetailScreen';
 import BrieflyDescribeScreen from './src/screens/BrieflyDescribeScreen';
 import AttachReportScreen from './src/screens/AttachReportScreen';
+import ThankYouScreen from './src/screens/ThankYouScreen';
 
 
 SplashScreen.preventAutoHideAsync()
@@ -71,6 +72,7 @@ export default function App() {
         <Stack.Screen name='concernDetail' component={ConcernDetailScreen} />
         <Stack.Screen name='brieflyDescribe' component={BrieflyDescribeScreen} />
         <Stack.Screen name='attachReport' component={AttachReportScreen} />
+        <Stack.Screen name='thankYou' component={ThankYouScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

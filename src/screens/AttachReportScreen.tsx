@@ -6,10 +6,13 @@ import ImagePlaceholder from "../../assets/icons/ImagePlaceholder.svg"
 import CloseIcon from "../../assets/icons/Close.svg"
 import AddIcon from "../../assets/icons/AddMore.svg"
 import CustomButton from '../components/CustomButton'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigation/type'
 
 const AttachReportScreen = () => {
 
   const [image, setImage] = useState(true)
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>()
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,8 +42,8 @@ const AttachReportScreen = () => {
           <Text style={styles.labelText}>Add more</Text>
         </TouchableOpacity>
       </View>
-      <CustomButton text="I'll fill later" labelStyle={{color:"#B4B4B4"}} containerStyle={{backgroundColor:"white"}} onPress={() => {}} />
-      <CustomButton text="Submit" onPress={() => {}} />
+      <CustomButton text="I'll fill later" labelStyle={{color:"#B4B4B4"}} containerStyle={{backgroundColor:"white"}} onPress={() =>navigation.navigate("skipScreen")} />
+      <CustomButton text="Submit" onPress={() => navigation.navigate("thankYou")} />
 
     </SafeAreaView>
   )
