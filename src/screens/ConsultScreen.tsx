@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomHeader from '../components/CustomHeader'
@@ -10,39 +10,29 @@ import { DoctorDetails } from '../constant/types'
 
 const ConsultScreen = () => {
 
-    const app_url = process.env.EXPO_PUBLIC_API_URL
-    const [doctorData, setDoctorData] = useState<DoctorDetails[]>([])
+    const API_URL = process.env.EXPO_PUBLIC_API_URL
     const [filteredDoctorData , setFilteredDoctorData] = useState<DoctorDetails[]>([])
     const [loading, setLoading] = useState<boolean>(false)
-    const [appliedFilters , setAppliedFilters] = useState<string[]>([])
 
     const concern = useSelector((state:RootState) => state.booking.concern)
 
     useEffect(() => {
-        if (concern) {
-            setAppliedFilters([concern])
-        }
-    },[])
-    useEffect(() => {
-        setLoading(true)
-        fetch(`${app_url}/doctors`)
-            .then((response) => response.json())
-            .then((data) => {
-                setLoading(false)
-                setDoctorData(data)
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
-    },[])
-
-    useEffect(() => {
-        if (concern) {
-            const filteredData = doctorData.filter((doctor) => doctor.specializes_in.includes(concern))
-            setFilteredDoctorData(filteredData)
-        }
-    },[concern,doctorData,appliedFilters])
-
+        setLoading(true);
+        fetch(`${API_URL}/doctors`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (concern) {
+              setFilteredDoctorData(data.filter((doctor:DoctorDetails) => doctor.specializes_in.includes(concern)));
+            } else {
+              setFilteredDoctorData(data);
+            }
+            setLoading(false);
+          })
+          .catch((error) => {
+            Alert.alert("Something went wrong!",error.message)
+            setLoading(false);
+          });
+      }, [API_URL, concern]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -50,15 +40,24 @@ const ConsultScreen = () => {
             <View style={styles.filterContainer}>
                 <ScrollView horizontal>
                     {
-                        appliedFilters.map((item,index) => <FilterItem key={index} text={item} /> )
-                    }                    
+                        concern ? 
+                        <FilterItem text={concern} />        
+                        : null
+                    }
+                    <FilterItem text='Video Consultation' />
+                              
                 </ScrollView>
                 <TouchableOpacity style={styles.filterButton}>
                     <FilterIcon />
                     <Text style={styles.filterButtonText}>Filter</Text>
                 </TouchableOpacity>
             </View>
-            <FlatList data={filteredDoctorData} renderItem={({item}) => <DoctorListItem details={item}  />} keyExtractor={(item,index) => index.toString()} />
+            {
+                loading ? 
+                <ActivityIndicator size={30} color={"#3A643C"} />
+                :
+                <FlatList data={filteredDoctorData} renderItem={({item}) => <DoctorListItem details={item}  />} keyExtractor={(item,index) => index.toString()} />
+            }
         </SafeAreaView>
     )
 }
