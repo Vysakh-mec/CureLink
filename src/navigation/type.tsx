@@ -13,5 +13,7 @@ export type RootStackParamList  = {
     skipScreen:undefined,
     myBooking:undefined,
     concernDetail:undefined,
-    brieflyDescribe:undefined
+    brieflyDescribe:undefined,
+    attachReport:undefined
+
 }

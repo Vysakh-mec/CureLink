@@ -5,9 +5,13 @@ import CustomProgressBar from '../components/CustomProgressBar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Picker } from '@react-native-picker/picker'
 import CustomButton from '../components/CustomButton'
+import SkipScreen from './SkipScreen'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigation/type'
 
 const BrieflyDescribeScreen = () => {
 
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>()
   const sleepPatterns = [
     "I sleep poorly, often wake up.",
     "I sleep well but wake up feeling tired.",
@@ -49,8 +53,8 @@ const BrieflyDescribeScreen = () => {
       <View style={[styles.subContainer,{flex:1,justifyContent:"center"}]}>
         <Text style={styles.linkText}>90% of users who attached their reports with the doctor have successfully improved their health.</Text>
       </View>
-      <CustomButton text="I'll fill later" containerStyle={{backgroundColor:"white"}} labelStyle={{color:"#B4B4B4"}} onPress={() => {}} />
-      <CustomButton text='Attach Reports' onPress={() => {}} />
+      <CustomButton text="I'll fill later" containerStyle={{backgroundColor:"white"}} labelStyle={{color:"#B4B4B4"}} onPress={() => <SkipScreen />} />
+      <CustomButton text='Attach Reports' onPress={() => navigation.navigate("attachReport")} />
 
     </SafeAreaView>
   )

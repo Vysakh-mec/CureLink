@@ -20,6 +20,7 @@ import { Provider } from 'react-redux';
 import store from './src/redux/store/store';
 import ConcernDetailScreen from './src/screens/ConcernDetailScreen';
 import BrieflyDescribeScreen from './src/screens/BrieflyDescribeScreen';
+import AttachReportScreen from './src/screens/AttachReportScreen';
 
 
 SplashScreen.preventAutoHideAsync()
@@ -50,7 +51,7 @@ export default function App() {
     <Provider store={store}>
     <NavigationContainer >
       <StatusBar style='dark' />
-      <Stack.Navigator initialRouteName='home'screenOptions={{
+      <Stack.Navigator initialRouteName='attachReport'screenOptions={{
         headerShown:false,
         cardStyle:{
           backgroundColor:"white"
@@ -69,6 +70,7 @@ export default function App() {
         <Stack.Screen name='myBooking' component={MyBookingScreen} />  
         <Stack.Screen name='concernDetail' component={ConcernDetailScreen} />
         <Stack.Screen name='brieflyDescribe' component={BrieflyDescribeScreen} />
+        <Stack.Screen name='attachReport' component={AttachReportScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
