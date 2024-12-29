@@ -61,7 +61,7 @@ const ConcernDetailScreen = () => {
                 </View>
             </ScrollView>
             <CustomButton text="I'll fill later"  containerStyle={{ backgroundColor: "white" }} labelStyle={{ color: "#B4B4B4" }} onPress={() => navigation.navigate("skipScreen")} />
-            <CustomButton text='Proceed' onPress={() => { }} />
+            <CustomButton text='Proceed' onPress={() => navigation.navigate("brieflyDescribe")} />
         </SafeAreaView>
     )
 }
