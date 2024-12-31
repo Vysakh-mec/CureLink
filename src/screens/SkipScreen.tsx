@@ -7,6 +7,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/type';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store/store';
+import Color from '../constant/Color';
 
 const SkipScreen = () => {
 
@@ -30,7 +31,7 @@ const SkipScreen = () => {
                 <Text style={styles.secondaryHeaderText}>We understand your concern in skipping these step.</Text>
                 <Text style={styles.linkText}>If you ever feel ready, you can always provide this information to help Doctor improve your care.</Text>
             </View>
-            <CustomButton onPress={() => navigation.navigate(Medicalprogress == 1 ? "brieflyDescribe" : Medicalprogress == 2 ? "attachReport" :"concernDetail")} text={`Continue Uploading (${Medicalprogress}/3)`} labelStyle={{color:"#3A643C"}} containerStyle={{backgroundColor:"white"}} />
+            <CustomButton onPress={() => navigation.navigate(Medicalprogress == 1 ? "brieflyDescribe" : Medicalprogress == 2 ? "attachReport" :"concernDetail")} text={`Continue Uploading (${Medicalprogress}/3)`} labelStyle={{color:Color.primaryColor}} containerStyle={{backgroundColor:"white"}} />
             <CustomButton onPress={() => navigation.navigate("myBooking")} text='View My Appoinments' />
         </SafeAreaView>
     )
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     secondaryText: {
         fontSize: 14,
         fontFamily: "Nunito400",
-        color: "#646665"
+        color: Color.secondaryTextColor
     },
     secondaryHeaderText: {
         fontSize: 14,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     linkText: {
         fontSize: 14,
         fontFamily: "Nunito500",
-        color: "#3A643C",
+        color: Color.primaryColor,
         textAlign: "center",
         marginTop: 30,
     },

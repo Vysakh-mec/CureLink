@@ -1,5 +1,6 @@
-import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native'
 import React from 'react'
+import Color from '../constant/Color'
 
 type CustomButtonProps = {
     text?:string,
@@ -11,7 +12,7 @@ type CustomButtonProps = {
 
 const CustomButton = ({ text , onPress , containerStyle , labelStyle , disabled }:CustomButtonProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} disabled={disabled} style={[styles.container,containerStyle,disabled ? { backgroundColor:"#E2E2E2"} : null]} onPress={() => onPress()}>
+    <TouchableOpacity activeOpacity={0.5} disabled={disabled} style={[styles.container,containerStyle,disabled ? { backgroundColor:Color.inactiveButton} : null]} onPress={() => onPress()}>
         <Text style={[styles.text,labelStyle]}>{text}</Text>
     </TouchableOpacity>
   )
@@ -21,7 +22,7 @@ export default CustomButton
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:"#3A643B",
+        backgroundColor:Color.primaryColor,
         paddingVertical:16,
         paddingHorizontal:16,
         borderRadius:12,

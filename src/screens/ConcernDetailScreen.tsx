@@ -13,6 +13,7 @@ import { RootStackParamList } from '../navigation/type'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
 import { setMedicalProgress } from '../redux/slices/bookingSlice'
+import Color from '../constant/Color'
 
 
 
@@ -122,7 +123,7 @@ const ConcernDetailScreen = () => {
                 <Modal transparent statusBarTranslucent>
                     <View style={{flex:1,backgroundColor:"rgba(0,0,0,0.5)",alignItems:"center",justifyContent:"center"}}>
                         <View style={{padding:30,backgroundColor:"white",borderRadius:20}}>
-                        <ActivityIndicator size={30} color={"#3A643B"} />
+                        <ActivityIndicator size={30} color={Color.primaryColor} />
                         </View>
                     </View>
                 </Modal>

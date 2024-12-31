@@ -10,6 +10,7 @@ import CustomButton from '../components/CustomButton'
 import { iconMap } from '../constant/IconsMap'
 import { useDispatch } from 'react-redux'
 import { setConcern } from '../redux/slices/bookingSlice'
+import Color from '../constant/Color'
 
 type Concern = {
     name: string,
@@ -94,7 +95,7 @@ const SelectConcernScreen = () => {
             </View>
             {
                 loading ?
-                    <ActivityIndicator size={50} color={"#3A643B"} />
+                    <ActivityIndicator size={50} color={Color.primaryColor} />
                     :
                     <FlatList
                         data={filteredData}
@@ -145,7 +146,7 @@ const CustomIcon = ({ id, name, handleClick, selectedConcern }: CustomIconProp) 
     const IconComponent = iconMap[name]
     return (
         <TouchableOpacity onPress={() => handleClick(name)} style={styles.iconContainer}>
-            <View style={[styles.iconWrapper, name == selectedConcern ? { borderColor: "#3A643B" } : null]}>
+            <View style={[styles.iconWrapper, name == selectedConcern ? { borderColor: Color.primaryColor } : null]}>
                 {IconComponent ? <IconComponent /> : <Hypertension />}
             </View>
             <Text style={styles.iconText}>{name}</Text>
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     }, linkText: {
         fontFamily: "Nunito600",
-        color: "#3A643C",
+        color: Color.primaryColor,
         marginRight: 10
     },
     columnWrapper: {
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     },
     iconText: {
         fontSize: 12,
-        color: "#646665",
+        color: Color.secondaryTextColor,
         fontFamily: "Nunito500"
     },
     iconWrapper: {

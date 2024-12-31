@@ -4,6 +4,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import AppointmentItem, { AppointmentItemType } from '../components/AppointmentItem'
 import AddButton from "../../assets/icons/AddIcon.svg"
+import Color from '../constant/Color'
 
 const HomeScreen = () => {
 
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   button: {
-    backgroundColor: "#3A643B",
+    backgroundColor: Color.primaryColor,
     borderRadius: 999,
     height: 60,
     aspectRatio: 1 / 1,

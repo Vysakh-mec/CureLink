@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import StarIcon from "../../assets/icons/StarIcon.svg"
 import { Review } from '../constant/types'
+import Color from '../constant/Color'
 
 type ReviewItemProps = {
   review:Review
@@ -41,6 +42,6 @@ const styles = StyleSheet.create({
     secondaryText:{
         fontSize:12,
         fontFamily:"Nunito400",
-        color:"#646665"
+        color:Color.secondaryTextColor
     }
 })

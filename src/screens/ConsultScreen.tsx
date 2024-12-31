@@ -7,6 +7,7 @@ import DoctorListItem from '../components/DoctorListItem'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
 import { DoctorDetails } from '../constant/types'
+import Color from '../constant/Color'
 
 const ConsultScreen = () => {
 
@@ -54,7 +55,7 @@ const ConsultScreen = () => {
             </View>
             {
                 loading ? 
-                <ActivityIndicator size={30} color={"#3A643C"} />
+                <ActivityIndicator size={30} color={Color.primaryColor} />
                 :
                 <FlatList data={filteredDoctorData} renderItem={({item}) => <DoctorListItem details={item}  />} keyExtractor={(item,index) => index.toString()} />
             }
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
         columnGap: 10
     },
     filterItemContainer: {
-        backgroundColor: "#3A643C",
+        backgroundColor: Color.primaryColor,
         marginRight: 20,
         paddingVertical: 10,
         paddingHorizontal: 20,

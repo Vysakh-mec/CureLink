@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
+import Color from '../constant/Color'
 
 type CustomProgressBarProps = {
   currentStep:number,
@@ -11,7 +12,7 @@ const CustomProgressBar = ({currentStep,totalStep}:CustomProgressBarProps) => {
   return (
     <View style={styles.container}>
       {
-        Array.from({length:totalStep}).map((item,index) => <View key={index} style={[styles.loadingBar,index < currentStep ? {backgroundColor:"#3A643B"} : null]}></View>)
+        Array.from({length:totalStep}).map((item,index) => <View key={index} style={[styles.loadingBar,index < currentStep ? {backgroundColor:Color.primaryColor} : null]}></View>)
       }
     </View>
   )

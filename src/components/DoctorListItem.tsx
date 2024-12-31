@@ -4,6 +4,7 @@ import StarIcon from "../../assets/icons/StarIcon.svg"
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import { DoctorListItemProps } from '../constant/types'
+import Color from '../constant/Color'
 
 
 
@@ -74,12 +75,12 @@ const styles = StyleSheet.create({
     subText:{
         fontSize:14,
         fontFamily:"Nunito400",
-        color:"#646665"
+        color:Color.secondaryTextColor
     },
     starText:{
         fontSize:16,
         fontFamily:"Nunito500",
-        color:"#646665"
+        color:Color.secondaryTextColor
     },
     starContainer:{
         flexDirection:"row",

@@ -1,5 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import Color from '../constant/Color';
 
 type CustomItemProps = {
     type:string;
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         color:"black"
     },
     activeContainer:{
-        backgroundColor:"#3A643B"
+        backgroundColor:Color.primaryColor
     },
     activeText:{
         color:"white"

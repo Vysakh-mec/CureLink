@@ -7,6 +7,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
+import Color from '../constant/Color'
 
 const AppoinmentConfirmed = () => {
 
@@ -27,7 +28,7 @@ const AppoinmentConfirmed = () => {
         <Text style={styles.linkText}>86% of users who submitted their reports and shared detailed information with the doctor have successfully improved their health.</Text>
       </View>
       <View style={{ flex: 1, justifyContent: "flex-end" }}>
-        <CustomButton text='Skip' onPress={() => navigation.navigate("skipScreen")} containerStyle={{ backgroundColor: "white", borderWidth: 1, borderColor: "#3A643C" }} labelStyle={{ color: "#3A643C" }} />
+        <CustomButton text='Skip' onPress={() => navigation.navigate("skipScreen")} containerStyle={{ backgroundColor: "white", borderWidth: 1, borderColor: Color.primaryColor }} labelStyle={{ color: Color.primaryColor }} />
         <CustomButton text='Upload Health Records' onPress={() => navigation.navigate("concernDetail")} />
       </View>
     </SafeAreaView>
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   secondaryText: {
     fontSize: 14,
     fontFamily: "Nunito400",
-    color: "#646665"
+    color: Color.secondaryTextColor
   },
   linkText: {
     fontSize: 14,

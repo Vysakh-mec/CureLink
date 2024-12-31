@@ -5,6 +5,7 @@ import CustomButton from '../components/CustomButton'
 import LottieView from 'lottie-react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import Color from '../constant/Color'
 
 const ThankYouScreen = () => {
   const [isAnimationFinished, setIsAnimationFinished] = useState(false);
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   secondaryText: {
-    color: "#646665",
+    color: Color.secondaryTextColor,
     fontFamily: "Nunito400",
     fontSize: 14,
     textAlign: "center"

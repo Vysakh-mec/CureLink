@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
 import CustomLoadingModal from '../components/CustomLoadingModal'
 import { setMedicalProgress } from '../redux/slices/bookingSlice'
+import Color from '../constant/Color'
 
 const BrieflyDescribeScreen = () => {
 
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 14,
     fontFamily: "Nunito400",
-    color: "#646665"
+    color: Color.secondaryTextColor
   },
   inputContainer: {
     paddingHorizontal: 16,
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
   linkText: {
     fontFamily: "Nunito500",
     fontSize: 14,
-    color: "#3A643C",
+    color: Color.primaryColor,
     textAlign: "center",
   }
 

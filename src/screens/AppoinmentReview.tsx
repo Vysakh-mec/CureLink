@@ -8,6 +8,7 @@ import { RootStackParamList } from '../navigation/type'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
 import { setApplicationID } from '../redux/slices/bookingSlice'
+import Color from '../constant/Color'
 
 const AppoinmentReview = () => {
 
@@ -108,7 +109,7 @@ const AppoinmentReview = () => {
             <Modal transparent statusBarTranslucent >
               <View style={{ backgroundColor: "rgba(0,0,0,0.5)", flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <View style={{ backgroundColor: "white", padding: 30, borderRadius: 20 }}>
-                  <ActivityIndicator size={30} color={"#3A643B"} />
+                  <ActivityIndicator size={30} color={Color.primaryColor} />
                 </View>
               </View>
             </Modal>
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
   secondaryText: {
     fontFamily: "Nunito400",
     fontSize: 14,
-    color: "#646665"
+    color: Color.secondaryTextColor
   },
   detailsContainer: {
     marginTop: 20,
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 12,
-    color: "#646665",
+    color: Color.secondaryTextColor,
     fontFamily: "Nunito400"
   },
   input: {
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   button: {
-    backgroundColor: "#3A643B",
+    backgroundColor: Color.primaryColor,
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 999

@@ -12,6 +12,7 @@ import * as DocumentPicker from "expo-document-picker"
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
 import CustomLoadingModal from '../components/CustomLoadingModal'
+import Color from '../constant/Color'
 
 type File ={ 
   name:string ,
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 14,
     fontFamily: "Nunito500",
-    color: "#3A643B"
+    color: Color.primaryColor
   },
   pdfContainer:{
     borderWidth:1,

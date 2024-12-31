@@ -11,6 +11,7 @@ import { DoctorDetails } from "../constant/types"
 import { iconMap } from "../constant/IconsMap"
 import { useDispatch } from "react-redux"
 import { setDoctor } from "../redux/slices/bookingSlice"
+import Color from "../constant/Color"
 
 const DoctorDetailScreen = () => {
 
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
     secondaryTitleText: {
         fontSize: 16,
         fontFamily: "Nunito400",
-        color: "#646665"
+        color: Color.secondaryTextColor
     },
     rowText: {
         fontSize: 20,
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
         height: 64,
         width: 64,
         marginRight: 16,
-        backgroundColor: "#EAF2EA",
+        backgroundColor: Color.secondaryGreen,
         borderRadius: 16,
         alignItems: "center",
         justifyContent: "center"

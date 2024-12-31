@@ -12,6 +12,7 @@ import { RootStackParamList } from '../navigation/type'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
 import { setAppointmentTime } from '../redux/slices/bookingSlice'
+import Color from '../constant/Color'
 
 
 const ChooseTimeScreen = () => {
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     linkText: {
         fontSize: 16,
         fontFamily: "Nunito600",
-        color: "#3A643B",
+        color: Color.primaryColor,
         textAlign: "center"
     }
 })
