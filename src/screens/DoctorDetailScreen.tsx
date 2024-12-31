@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomHeader from "../components/CustomHeader"
 import BulletIcon from "../../assets/icons/BulletIcon.svg"
@@ -73,7 +73,7 @@ const DoctorDetailScreen = () => {
                     <Text style={styles.primaryText}>Specializes in</Text>
                     <ScrollView horizontal>
                         {
-                            details.specializes_in.map((item, index) => <CutomIcon key={index} name={item} />)
+                            details.specializes_in.map((item, index) => <CustomIcon key={index} name={item} />)
                         }
                     </ScrollView>
                 </View>
@@ -130,12 +130,12 @@ const BulletHeader = ({ text }: BulletHeaderProps) => {
     )
 }
 
-type CutomIconProps = {
+type CustomIconProps = {
     name: string
 }
 
 
-const CutomIcon = ({ name }: CutomIconProps) => {
+const CustomIcon = ({ name }: CustomIconProps) => {
 
     const IconComponent = iconMap[name]
 

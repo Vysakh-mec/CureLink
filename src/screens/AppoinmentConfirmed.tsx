@@ -11,8 +11,9 @@ import { RootState } from '../redux/store/store'
 const AppoinmentConfirmed = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>()
-  const doctor = useSelector((state:RootState) => state.booking.selectedDoctor)
-  const consultationType = useSelector((state:RootState) => state.booking.consulatationType)
+  const doctor = useSelector((state: RootState) => state.booking.selectedDoctor)
+  const consultationType = useSelector((state: RootState) => state.booking.consulatationType)
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -21,7 +22,7 @@ const AppoinmentConfirmed = () => {
 
         <Image source={{ uri: "https://picsum.photos/200/300?random=1" }} style={styles.image} />
         <Text style={styles.primaryText}>{doctor?.name}</Text>
-        <Text style={styles.secondaryText}>{ consultationType == "chat" ? "Chat Consultaton - Free" : `Video Consultation - ${doctor?.video_consultation_fee}` }(paid)</Text>
+        <Text style={styles.secondaryText}>{consultationType == "chat" ? "Chat Consultaton - Free" : `Video Consultation - ${doctor?.video_consultation_fee}`}(paid)</Text>
 
         <Text style={styles.linkText}>86% of users who submitted their reports and shared detailed information with the doctor have successfully improved their health.</Text>
       </View>

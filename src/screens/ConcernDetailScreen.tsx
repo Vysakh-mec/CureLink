@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomHeader from '../components/CustomHeader'
@@ -10,16 +10,73 @@ import RadioInActive from "../../assets/icons/RadioInactive.svg"
 import CustomButton from '../components/CustomButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store/store'
+import { setMedicalProgress } from '../redux/slices/bookingSlice'
 
 
 
 const ConcernDetailScreen = () => {
+
+
+    const dispatch = useDispatch()
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+    const API_URL = process.env.EXPO_PUBLIC_API_URL 
+
+    const ApplicationID = useSelector((state: RootState) => state.booking.applicatiionID)
+    const concern = useSelector((state: RootState) => state.booking.concern)
+
     const level = ["Mild", "Moderate", "Severe"]
     const long = ["Days", "Weeks", "Months", "Year"]
-    const IconComponent = iconMap["HyperTension"]
+
+
+
     const [pickerValue, setPickerValue] = useState(6)
     const [radio, setRadio] = useState("Days")
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+    const [selectedLevel, setSelectedLevel] = useState("Mild")
+    const [loading , setLoading] = useState(false) 
+
+    const handleSubmit = async () => {
+        if (loading) {
+            return
+        }
+        const obj = {
+            medicalProgress:1,
+            severity:selectedLevel,
+            facingDuration:pickerValue+" "+radio
+        }
+
+        try {
+            setLoading(true)
+            const response = await fetch(API_URL + "/appointments/" + ApplicationID, {
+                method: "PATCH",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            })
+
+            if (response.ok) {
+                navigation.navigate("brieflyDescribe")
+                dispatch(setMedicalProgress(1))
+
+            } else {
+                Alert.alert("Something went wrong!", "Unable to update the details")
+            }
+        } catch (error) {
+            Alert.alert("Something went wrong!", (error as Error).message)
+        } finally {
+            setLoading(false)
+        }
+        
+    }
+
+    let IconComponent;
+    if (concern) {
+        IconComponent = iconMap[concern]
+    } else {
+        IconComponent = iconMap["HyperTension"]
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -33,14 +90,14 @@ const ConcernDetailScreen = () => {
                             <IconComponent height={35} width={35} />
                             : null
                         }
-                        <Text style={styles.labelText}>HyperTension</Text>
+                        <Text style={styles.labelText}>{concern}</Text>
                     </View>
                 </View>
                 <View style={styles.subContainer}>
                     <Text style={styles.primaryText}>Select severity of your concern</Text>
                     <View style={styles.rowContainer}>
                         {
-                            level.map((item, index) => <CustomIcon name={item} key={index} />)
+                            level.map((item, index) => <CustomIcon selectedLevel={selectedLevel} handlePress={setSelectedLevel} name={item} key={index} />)
                         }
                     </View>
                 </View>
@@ -60,8 +117,19 @@ const ConcernDetailScreen = () => {
                     </View>
                 </View>
             </ScrollView>
-            <CustomButton text="I'll fill later"  containerStyle={{ backgroundColor: "white" }} labelStyle={{ color: "#B4B4B4" }} onPress={() => navigation.navigate("skipScreen")} />
-            <CustomButton text='Proceed' onPress={() => navigation.navigate("brieflyDescribe")} />
+            {
+                loading && 
+                <Modal transparent statusBarTranslucent>
+                    <View style={{flex:1,backgroundColor:"rgba(0,0,0,0.5)",alignItems:"center",justifyContent:"center"}}>
+                        <View style={{padding:30,backgroundColor:"white",borderRadius:20}}>
+                        <ActivityIndicator size={30} color={"#3A643B"} />
+                        </View>
+                    </View>
+                </Modal>
+                
+            }
+            <CustomButton text="I'll fill later" containerStyle={{ backgroundColor: "white" }} labelStyle={{ color: "#B4B4B4" }} onPress={() => navigation.navigate("skipScreen")} />
+            <CustomButton text='Proceed' onPress={handleSubmit} />
         </SafeAreaView>
     )
 }
@@ -69,15 +137,17 @@ const ConcernDetailScreen = () => {
 export default ConcernDetailScreen
 
 type CustomIconProp = {
-    name: string
+    name: string,
+    selectedLevel: string,
+    handlePress: (string: string) => void
 }
 
-const CustomIcon = ({ name }: CustomIconProp) => {
+const CustomIcon = ({ name, selectedLevel, handlePress }: CustomIconProp) => {
     const IconComponent = iconMap[name]
     return (
-        <TouchableOpacity style={styles.iconComponentContainer}>
+        <TouchableOpacity onPress={() => handlePress(name)} style={styles.iconComponentContainer}>
             {
-                IconComponent ? <IconComponent /> : null
+                IconComponent ? <View style={[{ padding: 5 , borderWidth:3,borderColor:"white" }, selectedLevel == name ? styles.activeIcon : null]}><IconComponent /></View> : null
             }
             <Text style={styles.iconText}>{name}</Text>
         </TouchableOpacity>
@@ -123,8 +193,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderWidth: 1,
         borderColor: "#E2E2E2",
-        width: "50%",
-        marginVertical: 10
+        marginVertical: 10,
+        maxWidth: 200
     },
     labelText: {
         color: "#E2E2E2",
@@ -163,5 +233,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         columnGap: 10
+    },
+    activeIcon: {
+        borderWidth: 3,
+        borderColor: "#3A643C",
+        borderRadius: 999
     }
 })

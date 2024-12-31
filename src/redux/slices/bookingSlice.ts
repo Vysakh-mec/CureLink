@@ -15,11 +15,12 @@ type Date = {
 interface BookingState {
     concern: string | null;
     selectedDoctor: Doctor | null;
-    medicalDetailsStatus: 'pending' | 'uploading' | 'completed' | 'skipped';
+    medicalDetailsStatus: 'pending' | 'completed' ;
     medicalProgress: number;
     appointmentDate:Date | null;
     appointmentTime:string;
     consulatationType:string;
+    applicatiionID:string
 }
 
 
@@ -30,7 +31,8 @@ const initialState:BookingState= {
     medicalProgress:0,
     appointmentDate:null,
     appointmentTime:"",
-    consulatationType:""
+    consulatationType:"",
+    applicatiionID:""
 }
 
 const bookingSlice = createSlice({
@@ -46,7 +48,7 @@ const bookingSlice = createSlice({
         setAppointmentTime(state,action:PayloadAction<string>) {
             state.appointmentTime = action.payload
         },
-        setMedicalDetailsStatus(state,action:PayloadAction<'pending' | 'uploading' | 'completed' | 'skipped'>) {
+        setMedicalDetailsStatus(state,action:PayloadAction<'pending' | 'completed'>) {
             state.medicalDetailsStatus = action.payload
         },
         setMedicalProgress(state,action:PayloadAction<number>) {
@@ -57,11 +59,14 @@ const bookingSlice = createSlice({
         },
         setConsultationType(state,action:PayloadAction<string>) {
             state.consulatationType = action.payload
+        },
+        setApplicationID(state,action:PayloadAction<string>){
+            state.applicatiionID = action.payload
         }
     }
 })
 
 
-export const {setConcern , setDoctor, setAppointmentDate,setConsultationType,setAppointmentTime , setMedicalDetailsStatus , setMedicalProgress} = bookingSlice.actions
+export const {setConcern , setDoctor, setAppointmentDate,setConsultationType,setAppointmentTime , setMedicalDetailsStatus , setMedicalProgress , setApplicationID} = bookingSlice.actions
 
 export default bookingSlice.reducer

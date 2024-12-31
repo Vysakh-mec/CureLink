@@ -30,7 +30,7 @@ const SkipScreen = () => {
                 <Text style={styles.secondaryHeaderText}>We understand your concern in skipping these step.</Text>
                 <Text style={styles.linkText}>If you ever feel ready, you can always provide this information to help Doctor improve your care.</Text>
             </View>
-            <CustomButton onPress={() => navigation.navigate("concernDetail")} text={`Continue Uploading (${Medicalprogress}/3)`} labelStyle={{color:"#3A643C"}} containerStyle={{backgroundColor:"white"}} />
+            <CustomButton onPress={() => navigation.navigate(Medicalprogress == 1 ? "brieflyDescribe" : Medicalprogress == 2 ? "attachReport" :"concernDetail")} text={`Continue Uploading (${Medicalprogress}/3)`} labelStyle={{color:"#3A643C"}} containerStyle={{backgroundColor:"white"}} />
             <CustomButton onPress={() => navigation.navigate("myBooking")} text='View My Appoinments' />
         </SafeAreaView>
     )

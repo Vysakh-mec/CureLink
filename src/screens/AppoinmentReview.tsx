@@ -1,12 +1,13 @@
-import { ActivityIndicator, Image, KeyboardAvoidingView, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import GreenTick from "../../assets/icons/GreenTickIcon.svg"
 import CustomButton from '../components/CustomButton'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store/store'
+import { setApplicationID } from '../redux/slices/bookingSlice'
 
 const AppoinmentReview = () => {
 
@@ -16,18 +17,39 @@ const AppoinmentReview = () => {
   const appoinmentTime = useSelector((state: RootState) => state.booking.appointmentTime)
   const concern = useSelector((state: RootState) => state.booking.concern)
   const [couponCode, setCouponCode] = useState<string>("")
+  const [couponStatus , setCouponStatus] = useState(false)
   const [loading, setLoading] = useState<boolean>(false)
   const navigation = useNavigation<NavigationProp<RootStackParamList>>()
   const API_URL = process.env.EXPO_PUBLIC_API_URL
+  const dispatch = useDispatch()
+
+  const handleCouponValidation = () => {
+    if (couponCode == "Nothing Applied") {
+      Alert.alert("Coupon Code Applied Succesfully")
+      setCouponStatus(true)
+    }else{
+      Alert.alert("Invalid Coupon Code")
+    }
+
+  }
+
   
   const handleSubmit = async () => {
+
+    if (loading) {
+      return
+    }
+    
     let obj = {
       doctor: doctor,
       appoinmentDate: appoinmentDate,
       appoinmentTime: appoinmentTime,
       consultationType: consultationType,
-      couponCode: couponCode,
-      concern: concern
+      couponCode: couponStatus ? couponCode : "",
+      concern: concern,
+      medicalProgress:0,
+      medicalDetailsStatus:'pending',
+      appointmentStatus:'pending'
     }
     try {
       setLoading(true)
@@ -40,14 +62,15 @@ const AppoinmentReview = () => {
       })
       
       if (response.ok) {
-        console.log("Appoinment Succesfully Booked")
+        const responseData = await response.json()
+        dispatch(setApplicationID(responseData.id))
         navigation.navigate("appoinmentConfirmed")
       } else {
-        console.log("Erro adding an appointment")
+        Alert.alert("Something went wrong!","Error on submitting the appointment")
       }
 
     } catch (error) {
-      console.log("Something went Wrong" + error)
+      Alert.alert("Something went wrong!", (error as Error).message)
     } finally {
       setLoading(false)
     }
@@ -58,7 +81,6 @@ const AppoinmentReview = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS == "ios" ? 'padding' : 'height'}>
         <ScrollView style={{ flexGrow: 1 }}>
           <View style={styles.subContainer}>
@@ -96,11 +118,11 @@ const AppoinmentReview = () => {
               <Text style={styles.labelText}>Apply Coupon Code</Text>
               <TextInput value={couponCode} onChangeText={(text) => setCouponCode(text)} style={styles.input} placeholder='Enter here' />
             </View>
-            <TouchableOpacity disabled={!couponCode.length} style={[styles.button, !couponCode.length ? { backgroundColor: "#E2E2E2" } : null]}  >
+            <TouchableOpacity onPress={handleCouponValidation} disabled={!couponCode.length} style={[styles.button, !couponCode.length ? { backgroundColor: "#E2E2E2" } : null]}  >
               <Text style={styles.buttonText}>Apply</Text>
             </TouchableOpacity>
           </View>
-          <CustomButton text='Make Payment' onPress={() => handleSubmit()} />
+          <CustomButton disabled={loading} text='Make Payment' onPress={handleSubmit} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

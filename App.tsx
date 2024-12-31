@@ -58,7 +58,11 @@ export default function App() {
           backgroundColor:"white"
         }
       }}>
-        <Stack.Screen name="home" component={HomeScreen} /> 
+        <Stack.Screen name="home" component={HomeScreen} options={{
+          headerShown:true,
+          headerTitle:"CureLink",
+          headerTitleAlign:"center"
+        }} /> 
         <Stack.Screen name="selectConcern" component={SelectConcernScreen} />
         <Stack.Screen name="consult" component={ConsultScreen} />
         <Stack.Screen name='doctorDetail' component={DoctorDetailScreen} />

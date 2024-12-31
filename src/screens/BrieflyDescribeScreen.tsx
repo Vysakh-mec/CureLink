@@ -1,17 +1,24 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState } from 'react'
 import CustomHeader from '../components/CustomHeader'
 import CustomProgressBar from '../components/CustomProgressBar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Picker } from '@react-native-picker/picker'
 import CustomButton from '../components/CustomButton'
-import SkipScreen from './SkipScreen'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../redux/store/store'
+import CustomLoadingModal from '../components/CustomLoadingModal'
+import { setMedicalProgress } from '../redux/slices/bookingSlice'
 
 const BrieflyDescribeScreen = () => {
 
   const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+  const API_URL = process.env.EXPO_PUBLIC_API_URL
+  const appointmentID = useSelector((state:RootState) => state.booking.applicatiionID)
+  const dispatch = useDispatch()
+  
   const sleepPatterns = [
     "I sleep poorly, often wake up.",
     "I sleep well but wake up feeling tired.",
@@ -25,6 +32,47 @@ const BrieflyDescribeScreen = () => {
     "I sleep well without any noticeable issues."
   ];
 
+  const [describeText , setDescribeText] = useState("")
+  const [pickerValue , setPickerValue] = useState(sleepPatterns[0])
+  const [loading ,setLoading] = useState(false)
+  
+  const handleSubmit = async () => {
+
+    if (loading) {
+      return
+    }
+    
+    let obj = {
+      concernDescription:describeText,
+      sleepPattern:pickerValue,
+      medicalProgress:2
+    }
+
+    try {
+      setLoading(true)
+      const response  = await fetch(API_URL+"/appointments/"+appointmentID,{
+        method:"PATCH",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+      })
+
+      if (response.ok) {
+        navigation.navigate("attachReport")
+        dispatch(setMedicalProgress(2))
+      }else{
+        Alert.alert("Something went wrong!","Unable to update the details")
+      }
+
+    } catch (error) {
+      Alert.alert("Something went wrong!",(error as Error).message)  
+    }finally{
+      setLoading(false)
+    }
+
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <CustomHeader header='Briefly Describe' />
@@ -34,7 +82,7 @@ const BrieflyDescribeScreen = () => {
         <Text style={styles.primaryText}>Briefly describe your concern</Text>
         <View style={styles.inputContainer}>
           <Text style={styles.labelText}>Description</Text>
-          <TextInput multiline style={styles.input} numberOfLines={3} placeholder='Description' />
+          <TextInput value={describeText} onChangeText={(text) => setDescribeText(text)} multiline style={styles.input} numberOfLines={3} placeholder='Description' />
         </View>
       </View>
 
@@ -42,7 +90,7 @@ const BrieflyDescribeScreen = () => {
         <Text style={styles.primaryText}>Select your sleep pattern</Text>
         <View style={styles.inputContainer}>
           <Text style={styles.labelText}>Sleep Pattern</Text>
-          <Picker style={{ fontFamily: "Nunito400" }} itemStyle={{ fontFamily: "Nunito400" }} >
+          <Picker selectedValue={pickerValue} onValueChange={(value) => setPickerValue(value)} style={{ fontFamily: "Nunito400" }} itemStyle={{ fontFamily: "Nunito400" }} >
             {
               sleepPatterns.map((item, index) => <Picker.Item value={item} label={item} key={index} />)
             }
@@ -53,8 +101,12 @@ const BrieflyDescribeScreen = () => {
       <View style={[styles.subContainer,{flex:1,justifyContent:"center"}]}>
         <Text style={styles.linkText}>90% of users who attached their reports with the doctor have successfully improved their health.</Text>
       </View>
-      <CustomButton text="I'll fill later" containerStyle={{backgroundColor:"white"}} labelStyle={{color:"#B4B4B4"}} onPress={() => <SkipScreen />} />
-      <CustomButton text='Attach Reports' onPress={() => navigation.navigate("attachReport")} />
+      {
+        loading && <CustomLoadingModal />
+
+      }
+      <CustomButton text="I'll fill later" containerStyle={{backgroundColor:"white"}} labelStyle={{color:"#B4B4B4"}} onPress={() => navigation.navigate("skipScreen")} />
+      <CustomButton text='Attach Reports' onPress={handleSubmit} />
 
     </SafeAreaView>
   )

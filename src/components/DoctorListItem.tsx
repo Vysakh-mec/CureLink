@@ -4,8 +4,6 @@ import StarIcon from "../../assets/icons/StarIcon.svg"
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList } from '../navigation/type'
 import { DoctorListItemProps } from '../constant/types'
-import { useDispatch } from 'react-redux'
-import { setDoctor } from '../redux/slices/bookingSlice'
 
 
 
@@ -19,7 +17,7 @@ const DoctorListItem = ({details}:DoctorListItemProps) => {
     
     
   return (
-    <TouchableOpacity activeOpacity={0.9} onPress={() => handleNavigation()} style={styles.container}>     
+    <TouchableOpacity activeOpacity={0.9} onPress={handleNavigation} style={styles.container}>     
       <View style={styles.upperContainer}>
         <Image source={{
             uri:"https://picsum.photos/200/300?random=1"
